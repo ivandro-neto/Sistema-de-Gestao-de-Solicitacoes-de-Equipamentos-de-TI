@@ -1,0 +1,95 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id           Int              @id @default(autoincrement())
+  nome         String
+  email        String           @unique
+  senhaHash    String?
+  tipo         String           // 'Solicitante', 'Técnico', 'Administrador'
+  departamento String?
+  solicitacoes Solicitation[]   @relation("UsuarioSolicitations")
+  tecnico      Tecnico?
+}
+
+model Solicitation {
+  id             Int                        @id @default(autoincrement())
+  solicitanteId  Int
+  equipamentoId  Int                        // Associar solicitação a um equipamento
+  descricao      String
+  status         String                     // 'Pendente', 'Em Progresso', 'Concluída', 'Cancelada'
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
+  usuario        Usuario                    @relation("UsuarioSolicitations", fields: [solicitanteId], references: [id])
+  equipamento    Equipamento                 @relation(fields: [equipamentoId], references: [id])
+  atribuicoes    AtribuicaoTecnico[]        
+  historico      HistoricoSolicitacoes[]
+}
+
+model Equipamento {
+  id                  Int                    @id @default(autoincrement())
+  nome                String
+  descricao           String
+  componentes         EquipmentComponent[]
+  solicitacoes        Solicitation[]
+}
+
+model Componente {
+  id                   Int                    @id @default(autoincrement())
+  nome                 String
+  descricao            String
+  quantidadeDisponivel Int
+  unidadeMedida        String
+  equipamentos         EquipmentComponent[]
+}
+
+model EquipmentComponent {
+  id                    Int         @id @default(autoincrement())
+  equipamentoId         Int
+  componenteId          Int
+  quantidadeNecessaria  Int
+  equipamento           Equipamento @relation(fields: [equipamentoId], references: [id])
+  componente            Componente  @relation(fields: [componenteId], references: [id])
+}
+
+model Tecnico {
+  id           Int                  @id @default(autoincrement())
+  usuarioId    Int                  @unique
+  especialidade String
+  status       String               // 'Disponivel', 'Ocupado'
+  usuario      Usuario              @relation(fields: [usuarioId], references: [id])
+  atribuicoes  AtribuicaoTecnico[]
+}
+
+model AtribuicaoTecnico {
+  id             Int           @id @default(autoincrement())
+  solicitacaoId  Int
+  tecnicoId      Int
+  dataAtribuicao DateTime      @default(now())
+  solicitacao    Solicitation  @relation(fields: [solicitacaoId], references: [id])
+  tecnico        Tecnico       @relation(fields: [tecnicoId], references: [id])
+}
+
+model HistoricoSolicitacoes {
+  id             Int           @id @default(autoincrement())
+  solicitacaoId  Int
+  statusAnterior String
+  statusNovo     String
+  dataAlteracao  DateTime      @default(now())
+  solicitacao    Solicitation  @relation(fields: [solicitacaoId], references: [id])
+}
+
+model Relatorio {
+  id            Int       @id @default(autoincrement())
+  tipoRelatorio String
+  dataGeracao   DateTime  @default(now())
+  conteudo      String
+}
