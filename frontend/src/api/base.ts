@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:3000/api"
+export const API_URL = "https://sistema-de-gestao-de-solicitacoes-de.onrender.com/api"
 export const API_URL_USER = `${API_URL}/usuarios`
 export const API_URL_DASHBOARD = `${API_URL}/dashboard`
 export const API_URL_REQUEST = `${API_URL}/solicitacoes`

@@ -152,8 +152,8 @@ const RequestsListUser: React.FC = () => {
                   <td>{new Date(req.createdAt).toLocaleDateString()}</td>
                   <td>
                     <a href={`/request/${req.id}`} className={styles.detailLink}>Ver Detalhes</a>
-                    <button onClick={() => openUpdateModal(req)} className={styles.updateButton}>Atualizar</button>
-                    <button onClick={() => openDeleteModal(req)} className={styles.deleteButton}>Cancelar </button>
+                    <button type ="button" onClick={() => openUpdateModal(req)} className={styles.updateButton}>Atualizar</button>
+                    <button type="button" onClick={() => openDeleteModal(req)} className={styles.deleteButton}>Cancelar </button>
                   </td>
                 </tr>
               ))}
