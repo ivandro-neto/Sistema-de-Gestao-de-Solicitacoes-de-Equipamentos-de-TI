@@ -2,6 +2,10 @@
 
 Este projeto é uma aplicação web que automatiza o fluxo de solicitação, montagem e entrega de equipamentos de TI. Ele possibilita que os colaboradores solicitem novos equipamentos, que os técnicos sejam automaticamente designados para montagem e que os administradores acompanhem e gerenciem todas as requisições.
 
+> **Live Demo:** [https://sistema-de-gestao-de-solicitacoes-de-equipamentos-de-ti.vercel.app/](https://sistema-de-gestao-de-solicitacoes-de-equipamentos-de-ti.vercel.app/)
+
+---
+
 ## Funcionalidades
 
 - **Login e Registro:**  
@@ -9,7 +13,7 @@ Este projeto é uma aplicação web que automatiza o fluxo de solicitação, mon
 
 - **Dashboard Personalizado:**  
   Painéis com informações relevantes para cada perfil:
-  - **Solicitante:** Exibição de suas solicitações e histórico.
+  - **Solicitante:** Visualização de suas solicitações e histórico.
   - **Técnico:** Atribuições, atualizações de status e gerenciamento de tarefas.
   - **Administrador:** Visão completa das solicitações, gerenciamento de usuários, estoque e relatórios.
 
@@ -27,11 +31,13 @@ Este projeto é uma aplicação web que automatiza o fluxo de solicitação, mon
 
 - **Relatórios e Estatísticas:**  
   - Geração automática de relatórios sobre solicitações, desempenho dos técnicos e estoque de componentes.
-  - Visualização de gráficos e estatísticas para apoio na tomada de decisões.
+  - Visualização de gráficos e estatísticas para apoiar a tomada de decisões.
 
 - **Notificações:**  
-  - Envio automático de notificações para usuários (solicitantes, técnicos e administradores) em eventos importantes, como alteração de status e novas atribuições.
-  - Funcionalidade de envio de notificações em massa para grupos de usuários por tipo.
+  - Envio automático de notificações para os usuários em eventos importantes, como alteração de status e novas atribuições.
+  - Possibilidade de envio em massa por tipo de usuário (ex.: todos os técnicos ou administradores).
+
+---
 
 ## Tecnologias Utilizadas
 
@@ -52,7 +58,8 @@ Este projeto é uma aplicação web que automatiza o fluxo de solicitação, mon
 
 - **Deploy:**
   - Vercel para o frontend
-  - Outras plataformas (Heroku, etc.) para o backend, conforme necessário
+
+---
 
 ## Instalação e Configuração
 
