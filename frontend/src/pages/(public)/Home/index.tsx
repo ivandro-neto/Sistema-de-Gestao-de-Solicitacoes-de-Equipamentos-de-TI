@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
         {/* Imagem de Herói (exemplo de imagem da internet via Unsplash) */}
         <div className={styles.heroImageWrapper}>
           <img
-            src="/public/hero.png"
+            src="/hero.png"
             alt="Equipamentos de TI"
             className={styles.heroImage}
           />
