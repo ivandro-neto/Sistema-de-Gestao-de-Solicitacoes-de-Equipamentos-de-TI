@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import styles from "./css/style.module.css";
 import { 
-  getRelatorios, 
   generateRelatorioDesempenhoTecnicos, 
   generateRelatorioEstoqueComponentes, 
   generateRelatorioSolicitacoes 
 } from "../../../api/reports";
 import { getPerformanceMetrics, getInventoryMetrics, getRequestsMetrics } from "../../../api/reportMetrics";
-import { Report } from "../../../utils/Model";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Bar, Pie } from "react-chartjs-2";
@@ -25,7 +23,6 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
 const ReportsStatistics: React.FC = () => {
-  const [reports, setReports] = useState<Report[]>([]);
   const [performanceData, setPerformanceData] = useState<any>(null);
   const [inventoryData, setInventoryData] = useState<any>(null);
   const [requestsData, setRequestsData] = useState<any>(null);
@@ -33,14 +30,7 @@ const ReportsStatistics: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [genMessage, setGenMessage] = useState<string>("");
 
-  const fetchReports = async () => {
-    try {
-      const data = await getRelatorios();
-      setReports(data);
-    } catch (err) {
-      setError("Erro ao buscar relatórios.");
-    }
-  };
+
 
   const fetchMetrics = async () => {
     try {
@@ -113,7 +103,7 @@ const ReportsStatistics: React.FC = () => {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        await Promise.all([fetchReports(), fetchMetrics()]);
+        await Promise.all([ fetchMetrics()]);
       } catch (err) {
         console.error(err);
       } finally {
@@ -147,7 +137,6 @@ const ReportsStatistics: React.FC = () => {
         "Relatorio_Desempenho_Tecnicos.pdf"
       );
       setGenMessage("Relatório de desempenho gerado com sucesso.");
-      fetchReports();
     } catch (err) {
       setGenMessage("Erro ao gerar relatório de desempenho.");
     }
@@ -163,7 +152,6 @@ const ReportsStatistics: React.FC = () => {
         "Relatorio_Estoque_Componentes.pdf"
       );
       setGenMessage("Relatório de estoque gerado com sucesso.");
-      fetchReports();
     } catch (err) {
       setGenMessage("Erro ao gerar relatório de estoque.");
     }
@@ -179,7 +167,7 @@ const ReportsStatistics: React.FC = () => {
         "Relatorio_Solicitacoes.pdf"
       );
       setGenMessage("Relatório de solicitações gerado com sucesso.");
-      fetchReports();
+      
     } catch (err) {
       setGenMessage("Erro ao gerar relatório de solicitações.");
     }
@@ -206,13 +194,13 @@ const ReportsStatistics: React.FC = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>Relatórios e Estatísticas</h2>
         <div className={styles.buttonContainer}>
-          <button onClick={handleGeneratePerformance}>
+          <button type="button" onClick={handleGeneratePerformance}>
             Gerar Relatório de Desempenho dos Técnicos (PDF)
           </button>
-          <button onClick={handleGenerateInventory}>
+          <button type="button" onClick={handleGenerateInventory}>
             Gerar Relatório de Estoque de Componentes (PDF)
           </button>
-          <button onClick={handleGenerateRequests}>
+          <button type="button" onClick={handleGenerateRequests}>
             Gerar Relatório de Solicitações (PDF)
           </button>
         </div>

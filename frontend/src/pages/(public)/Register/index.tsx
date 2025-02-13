@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/styles.module.css";
 import { register } from "../../../api/user";
-import { Roles } from "../../../utils/Roles";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -49,6 +48,7 @@ const RegisterPage: React.FC = () => {
           <div className={styles.inputGroup}>
             <label className={styles.label}>Username</label>
             <input
+              name="name"
               type="text"
               placeholder="Seu Nome"
               value={username}

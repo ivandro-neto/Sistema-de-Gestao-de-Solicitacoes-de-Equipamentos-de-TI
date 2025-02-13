@@ -1,9 +1,7 @@
 import styles from "./css/styles.module.css";
 
 type Notification = {
-  type: "info" | "warn";
-  title: string;
-  message: string;
+  mensagem: string;
 };
 
 type NotificationsTableProps = {

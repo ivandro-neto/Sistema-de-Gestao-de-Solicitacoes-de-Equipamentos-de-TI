@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { deleteUser, getUsers, register } from "../../../api/user";
-import { User } from "../../../utils/Model";
+import type { User } from "../../../utils/Model";
 import { Roles, RolesExtended } from "../../../utils/Roles";
 
 
@@ -53,13 +53,13 @@ export default function UserManagement() {
         <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="text" placeholder="Departamento" value={departamento} onChange={(e) => setDepartamento(e.target.value)} />
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <select title="roles" value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="admin">Admin</option>
           <option value="tech">Técnico</option>
           <option value="comer">Comercial</option>
           <option value="user">Solicitante</option>
         </select>
-        <button onClick={handleAddUser}>Adicionar Usuário</button>
+        <button type="button" onClick={handleAddUser}>Adicionar Usuário</button>
       </div>
 
       {/* Lista de Usuários */}
@@ -79,7 +79,7 @@ export default function UserManagement() {
               <td>{user.email}</td>
               <td>{RolesExtended[user.tipo]}</td>
               <td>
-                <button className={styles.deleteButton} onClick={() => handleDeleteUser(user?.id)}>
+                <button type="button" className={styles.deleteButton} onClick={() => handleDeleteUser(user.id || "")}>
                   Excluir
                 </button>
               </td>

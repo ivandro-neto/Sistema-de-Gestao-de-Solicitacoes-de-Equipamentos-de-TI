@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+
 import { LinkButton } from '../Button';
 import UserCard from '../UserCard';
 import styles from './css/styles.module.css'
@@ -18,10 +18,10 @@ const SideNav = () => {
       <ul className={styles.list}>
         <li className={styles.items}>
         {
-          user.type === Roles["tech"]  ? 
-          <LinkButton url={user.type === Roles["tech"] ?'/tech/dashboard': '/user/dashboard'} content={'Dashboard'}/>
+          user.type === Roles.tech  ? 
+          <LinkButton url={user.type === Roles.tech ?'/tech/dashboard': '/user/dashboard'} content={'Dashboard'}/>
             : 
-            <LinkButton url={user.type === Roles["admin"] ?'/admin/dashboard': '/user/dashboard'} content={'Dashboard'}/>
+            <LinkButton url={user.type === Roles.admin ?'/admin/dashboard': '/user/dashboard'} content={'Dashboard'}/>
           }
         </li>
         <li className={styles.items}>
@@ -29,50 +29,50 @@ const SideNav = () => {
         </li>
         <li className={styles.items}>
           {
-          user.type === Roles["tech"]  ? 
-          <LinkButton url={user.type === Roles["tech"] ?'/tech/requests': '/user/requests'} content={'Solicitações'}/>
+          user.type === Roles.tech  ? 
+          <LinkButton url={user.type === Roles.tech ?'/tech/requests': '/user/requests'} content={'Solicitações'}/>
             : 
-            <LinkButton url={user.type === Roles["admin"] ?'/admin/requests': '/user/requests'} content={'Solicitações'}/>
+            <LinkButton url={user.type === Roles.admin ?'/admin/requests': '/user/requests'} content={'Solicitações'}/>
           }
         </li>
         {
-           user.type === Roles["tech"]  ? 
+           user.type === Roles.tech  ? 
            (<li className={styles.items}>
            <LinkButton url={'/tech/panel'} content={'Atribuições'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["admin"]  ? 
+           user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/reports'} content={'Relatórios'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["admin"]  ? 
+           user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/user/managment'} content={'Utilizadores'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["admin"]  ? 
+           user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/inventory'} content={'Estoque'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["tech"]  ? 
+           user.type === Roles.tech  ? 
            (<li className={styles.items}>
            <LinkButton url={'/tech/inventory'} content={'Estoque'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["tech"]  ? 
+           user.type === Roles.tech  ? 
            (<li className={styles.items}>
            <LinkButton url={'/tech/inventory/check'} content={'Equipamentos'}/>
           </li>) : ""
         }
         {
-           user.type === Roles["admin"]  ? 
+           user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/inventory/check'} content={'Equipamentos'}/>
           </li>) : ""

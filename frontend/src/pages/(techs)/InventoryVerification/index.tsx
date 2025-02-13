@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import styles from "./css/style.module.css";
 import { getEquipamentoById, getEquipamentos } from "../../../api/equipaments";
-import { Equipamento } from "../../../utils/Model";
+import type { Equipamento } from "../../../utils/Model";
 
 const InventoryVerification: React.FC = () => {
   const [equipmentId, setEquipmentId] = useState<string>("");

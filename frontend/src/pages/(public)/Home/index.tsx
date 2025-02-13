@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/styles.module.css";
 
@@ -20,10 +19,10 @@ const HomePage: React.FC = () => {
             eficiente e transparente.
           </p>
           <div className={styles.heroButtons}>
-            <button className={styles.ctaButton} onClick={() => navigate("/login")}>
+            <button type="button"className={styles.ctaButton} onClick={() => navigate("/login")}>
               Login
             </button>
-            <button className={styles.outlineButton} onClick={() => navigate("/register")}>
+            <button type="button"className={styles.outlineButton} onClick={() => navigate("/register")}>
               Registrar
             </button>
           </div>
@@ -151,7 +150,7 @@ const HomePage: React.FC = () => {
               placeholder="Mensagem"
               className={styles.formTextarea}
               required
-            ></textarea>
+            />
             <button type="submit" className={styles.ctaButton}>
               Enviar
             </button>

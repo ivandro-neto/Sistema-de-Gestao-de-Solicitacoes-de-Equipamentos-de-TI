@@ -17,7 +17,7 @@ const RequestDetails: React.FC = () => {
   useEffect(() => {
     const fetchDetailsAndHistory = async () => {
       try {
-        const reqData = await getSolicitacaoById(id);
+        const reqData = await getSolicitacaoById(id!);
         setRequest(reqData);
         const allHist = await getHistoricos();
         // Converte ambos os valores para string para garantir a comparação
