@@ -1,0 +1,49 @@
+/* InventoryVerification.module.css */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.formGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.equipmentDetails {
+  margin-top: 20px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+.loading {
+  text-align: center;
+  font-size: 18px;
+}
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: red;
+}

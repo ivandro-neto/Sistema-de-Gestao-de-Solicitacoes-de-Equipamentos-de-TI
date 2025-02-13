@@ -7,6 +7,7 @@ import tecnicosRouter from './tecnicos';
 import atribuicoesRouter from './atribuicoes';
 import historicoRouter from './historico';
 import relatoriosRouter from './relatorios';
+import dashboardRouter from './dashboard';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/tecnicos', tecnicosRouter);
 router.use('/atribuicoes', atribuicoesRouter);
 router.use('/historico', historicoRouter);
 router.use('/relatorios', relatoriosRouter);
+router.use('/dashboard', dashboardRouter);
 
 export default router;

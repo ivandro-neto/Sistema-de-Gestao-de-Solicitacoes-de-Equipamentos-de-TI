@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
  * Função auxiliar para verificar se os componentes do equipamento estão disponíveis.
  * Retorna um array com os erros (se houver) ou vazio se estiver tudo OK.
  */
-async function verificarEstoque(equipamentoId: number): Promise<string[]> {
+async function verificarEstoque(equipamentoId: string): Promise<string[]> {
   const errors: string[] = [];
   // Busca os componentes necessários para o equipamento
   const componentesNecessarios = await prisma.equipmentComponent.findMany({
@@ -29,7 +29,7 @@ async function verificarEstoque(equipamentoId: number): Promise<string[]> {
 /**
  * Função auxiliar para atualizar o estoque: deduz as quantidades necessárias dos componentes.
  */
-async function atualizarEstoque(equipamentoId: number): Promise<void> {
+async function atualizarEstoque(equipamentoId: string): Promise<void> {
   const componentesNecessarios = await prisma.equipmentComponent.findMany({
     where: { equipamentoId },
     include: { componente: true }
@@ -48,9 +48,9 @@ async function atualizarEstoque(equipamentoId: number): Promise<void> {
  * Pode-se filtrar por especialidade (por exemplo, se o equipamento exigir um técnico com determinada especialidade).
  * Neste exemplo, simplesmente busca o primeiro técnico com status "Disponivel".
  */
-async function atribuirTecnico(): Promise<{ tecnicoId: number } | null> {
+async function atribuirTecnico(): Promise<{ tecnicoId: string } | null> {
   const tecnico = await prisma.tecnico.findFirst({
-    where: { status: "Disponivel" }
+    where: { status: "available" }
   });
 
   if (!tecnico) return null;
@@ -58,7 +58,7 @@ async function atribuirTecnico(): Promise<{ tecnicoId: number } | null> {
   // Atualiza o status do técnico para "Ocupado"
   await prisma.tecnico.update({
     where: { id: tecnico.id },
-    data: { status: "Ocupado" }
+    data: { status: "unavailable" }
   });
 
   return { tecnicoId: tecnico.id };
@@ -87,7 +87,7 @@ export const createSolicitacao = async (req: Request, res: Response): Promise<vo
   try {
     // Verifica se o equipamento existe
     const equipamento = await prisma.equipamento.findUnique({
-      where: { id: Number(equipamentoId) }
+      where: { id: equipamentoId }
     });
     if (!equipamento) {
       res.status(404).json({ error: 'Equipamento não encontrado.' });
@@ -95,19 +95,19 @@ export const createSolicitacao = async (req: Request, res: Response): Promise<vo
     }
 
     // Verifica a disponibilidade dos componentes
-    const errosEstoque = await verificarEstoque(Number(equipamentoId));
+    const errosEstoque = await verificarEstoque(equipamentoId);
 
-    let statusSolicitacao = "Pendente";
+    let statusSolicitacao = "pending";
     let atribuicaoTecnico = null;
 
     if (errosEstoque.length === 0) {
       // Componentes disponíveis: atualiza o estoque
-      await atualizarEstoque(Number(equipamentoId));
+      await atualizarEstoque(equipamentoId);
 
       // Tenta atribuir um técnico disponível
       const atribuicao = await atribuirTecnico();
       if (atribuicao) {
-        statusSolicitacao = "Em Progresso";
+        statusSolicitacao = "progress";
         atribuicaoTecnico = atribuicao;
       }
     } else {
@@ -118,7 +118,7 @@ export const createSolicitacao = async (req: Request, res: Response): Promise<vo
     // Cria a solicitação
     const newSolicitacao = await prisma.solicitation.create({
       data: {
-        solicitanteId: Number(solicitanteId),
+        solicitanteId: solicitanteId,
         descricao,
         status: statusSolicitacao,
         equipamentoId
@@ -165,8 +165,22 @@ export const getSolicitacoes = async (req: Request, res: Response): Promise<void
 export const getSolicitacaoById = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
+    
     const solicitacao = await prisma.solicitation.findUnique({
-      where: { id: Number.parseInt(id) },
+      where: { id },
+      include: { usuario: true }
+    });
+    if (solicitacao) res.json(solicitacao);
+    else res.status(404).json({ error: 'Solicitação não encontrada.' });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar solicitação.' });
+  }
+};
+export const getSolicitacaoByUserId = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  try {
+    const solicitacao = await prisma.solicitation.findMany({
+      where: { solicitanteId: id },
       include: { usuario: true }
     });
     if (solicitacao) res.json(solicitacao);
@@ -181,7 +195,7 @@ export const updateSolicitacao = async (req: Request, res: Response): Promise<vo
   const { descricao, status } = req.body;
   try {
     const updatedSolicitacao = await prisma.solicitation.update({
-      where: { id: Number.parseInt(id) },
+      where: { id: id },
       data: { descricao, status }
     });
     res.json(updatedSolicitacao);
@@ -195,12 +209,12 @@ export const updateSolicitacaoStatus = async (req: Request, res: Response): Prom
   const { status } = req.body;
   try {
     // Se o status for atualizado para "Concluída", pode-se simular a geração de um comprovante.
-    if (status === "Concluída") {
+    if (status === "completed") {
       console.log(`Gerando comprovante de entrega para solicitação ${id}...`);
       // Aqui poderia ser invocado um serviço de geração de PDF ou similar.
     }
     const updatedSolicitacao = await prisma.solicitation.update({
-      where: { id: Number.parseInt(id) },
+      where: { id: id },
       data: { status }
     });
     res.json(updatedSolicitacao);
@@ -212,7 +226,7 @@ export const updateSolicitacaoStatus = async (req: Request, res: Response): Prom
 export const deleteSolicitacao = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await prisma.solicitation.delete({ where: { id: Number.parseInt(id) } });
+    await prisma.solicitation.delete({ where: { id: id } });
     res.json({ message: 'Solicitação removida com sucesso.' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao remover solicitação.' });

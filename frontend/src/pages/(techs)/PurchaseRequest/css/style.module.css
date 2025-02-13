@@ -1,0 +1,44 @@
+/* PurchaseRequest.module.css */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.loading {
+  text-align: center;
+  font-size: 18px;
+}
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: red;
+}
+.success {
+  text-align: center;
+  font-size: 18px;
+  color: green;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+label {
+  font-size: 16px;
+  font-weight: bold;
+}
+select,
+input[type="number"] {
+  padding: 10px;
+  font-size: 16px;
+}
+button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}

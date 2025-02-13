@@ -18,7 +18,7 @@ export const getHistoricoById = async (req: Request, res: Response): Promise<voi
   const { id } = req.params;
   try {
     const historico = await prisma.historicoSolicitacoes.findUnique({
-      where: { id: Number.parseInt(id) },
+      where: { id},
       include: { solicitacao: true }
     });
     if (historico) res.json(historico);
@@ -43,7 +43,7 @@ export const createHistorico = async (req: Request, res: Response): Promise<void
 export const deleteHistorico = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await prisma.historicoSolicitacoes.delete({ where: { id: Number.parseInt(id) } });
+    await prisma.historicoSolicitacoes.delete({ where: { id} });
     res.json({ message: 'Histórico removido com sucesso' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao remover histórico' });

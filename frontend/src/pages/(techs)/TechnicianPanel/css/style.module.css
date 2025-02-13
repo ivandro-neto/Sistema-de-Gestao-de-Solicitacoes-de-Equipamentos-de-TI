@@ -1,0 +1,42 @@
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+.loading, .error {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 50px;
+}
+.error {
+  color: red;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.updateButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.updateButton:hover {
+  background-color: #0056b3;
+}
+.noData {
+  text-align: center;
+  color: #777;
+}

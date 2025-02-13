@@ -16,7 +16,7 @@ export const getComponenteById = async (req: Request, res: Response): Promise<vo
   const { id } = req.params;
   try {
     const componente = await prisma.componente.findUnique({
-      where: { id: Number.parseInt(id) }
+      where: { id }
     });
     if (componente) res.json(componente);
     else res.status(404).json({ error: 'Componente não encontrado' });
@@ -42,7 +42,7 @@ export const updateComponente = async (req: Request, res: Response): Promise<voi
   const { nome, descricao, quantidadeDisponivel, unidadeMedida } = req.body;
   try {
     const updatedComponente = await prisma.componente.update({
-      where: { id: Number.parseInt(id) },
+      where: { id },
       data: { nome, descricao, quantidadeDisponivel, unidadeMedida }
     });
     res.json(updatedComponente);
@@ -54,7 +54,7 @@ export const updateComponente = async (req: Request, res: Response): Promise<voi
 export const deleteComponente = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await prisma.componente.delete({ where: { id: Number.parseInt(id) } });
+    await prisma.componente.delete({ where: { id } });
     res.json({ message: 'Componente removido com sucesso' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao remover componente' });

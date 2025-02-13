@@ -18,7 +18,7 @@ export const getEquipamentoById = async (req: Request, res: Response): Promise<v
   const { id } = req.params;
   try {
     const equipamento = await prisma.equipamento.findUnique({
-      where: { id: Number.parseInt(id) },
+      where: { id },
       include: { componentes: true }
     });
     if (equipamento) res.json(equipamento);
@@ -45,7 +45,7 @@ export const updateEquipamento = async (req: Request, res: Response): Promise<vo
   const { nome, descricao } = req.body;
   try {
     const updatedEquipamento = await prisma.equipamento.update({
-      where: { id: Number.parseInt(id) },
+      where: { id },
       data: { nome, descricao }
     });
     res.json(updatedEquipamento);
@@ -58,12 +58,12 @@ export const deleteEquipamento = async (req: Request, res: Response): Promise<vo
   const { id } = req.params;
   try {
     
-    const equipamento = await prisma.equipamento.findUnique({ where: { id: Number.parseInt(id) } });
+    const equipamento = await prisma.equipamento.findUnique({ where: { id } });
     if(!equipamento)
       //@ts-ignore
       return res.status(404).json({error : "Este equipamento não existe."})
     
-      await prisma.equipamento.delete({where : { id : Number.parseInt(id)}})
+      await prisma.equipamento.delete({where : { id }})
       //@ts-ignore
     return res.json({ message: 'Equipamento removido com sucesso' });
   } catch (error) {

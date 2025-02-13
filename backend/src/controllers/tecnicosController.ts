@@ -18,7 +18,7 @@ export const getTecnicoById = async (req: Request, res: Response): Promise<void>
   const { id } = req.params;
   try {
     const tecnico = await prisma.tecnico.findUnique({
-      where: { id: Number.parseInt(id) },
+      where: { id },
       include: { usuario: true }
     });
     if (tecnico) res.json(tecnico);
@@ -45,7 +45,7 @@ export const updateTecnico = async (req: Request, res: Response): Promise<void> 
   const { especialidade, status } = req.body;
   try {
     const updatedTecnico = await prisma.tecnico.update({
-      where: { id: Number.parseInt(id) },
+      where: { id },
       data: { especialidade, status }
     });
     res.json(updatedTecnico);
@@ -57,7 +57,7 @@ export const updateTecnico = async (req: Request, res: Response): Promise<void> 
 export const deleteTecnico = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await prisma.tecnico.delete({ where: { id: Number.parseInt(id) } });
+    await prisma.tecnico.delete({ where: { id } });
     res.json({ message: 'Técnico removido com sucesso' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao remover técnico' });

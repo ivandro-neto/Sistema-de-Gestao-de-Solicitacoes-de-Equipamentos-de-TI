@@ -15,7 +15,7 @@ export const getRelatorios = async (req: Request, res: Response): Promise<void> 
 export const getRelatorioById = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const relatorio = await prisma.relatorio.findUnique({ where: { id: Number.parseInt(id) } });
+    const relatorio = await prisma.relatorio.findUnique({ where: { id } });
     if (relatorio) res.json(relatorio);
     else res.status(404).json({ error: 'Relatório não encontrado' });
   } catch (error) {
@@ -38,7 +38,7 @@ export const createRelatorio = async (req: Request, res: Response): Promise<void
 export const deleteRelatorio = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    await prisma.relatorio.delete({ where: { id: Number.parseInt(id) } });
+    await prisma.relatorio.delete({ where: { id } });
     res.json({ message: 'Relatório removido com sucesso' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao remover relatório' });
