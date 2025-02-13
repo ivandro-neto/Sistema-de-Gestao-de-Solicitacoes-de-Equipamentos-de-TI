@@ -1,4 +1,6 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
+
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { 
@@ -7,7 +9,7 @@ import {
   updateSolicitacao, 
   deleteSolicitacao 
 } from "../../../api/requests";
-import { Request } from "../../../utils/Model"; // Interface Request: { id, descricao, status, date, equipamentoId }
+import type { Request } from "../../../utils/Model"; // Interface Request: { id, descricao, status, date, equipamentoId }
 import CreateModal from "../../../components/Modals/CreateModal";
 
 const RequestsListUser: React.FC = () => {
@@ -100,7 +102,7 @@ const RequestsListUser: React.FC = () => {
   const handleDelete = async () => {
     if (!currentRequest) return;
     try {
-      await deleteSolicitacao(currentRequest.id);
+      await deleteSolicitacao(String(currentRequest.id));
       closeDeleteModal();
       fetchRequests();
     } catch (err) {
@@ -129,7 +131,7 @@ const RequestsListUser: React.FC = () => {
     <Layout>
       <div className={styles.container}>
         <h2 className={styles.title}>Minhas Solicitações</h2>
-        <button onClick={openCreateModal} className={styles.createButton}>Criar Solicitação</button>
+        <button type="button" onClick={openCreateModal} className={styles.createButton}>Criar Solicitação</button>
         {requests.length === 0 ? (
           <p className={styles.noData}>Nenhuma solicitação encontrada.</p>
         ) : (
@@ -192,7 +194,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ request, onClose, onUpdate })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdate({ id: request.id, descricao, status, equipamentoId });
+    onUpdate({ id:String( request.id), descricao, status, equipamentoId });
   };
 
   return (
@@ -206,7 +208,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ request, onClose, onUpdate })
             onChange={(e) => setDescricao(e.target.value)}
             required
           />
-          <select value={status} onChange={(e) => setStatus(e.target.value)} disabled>
+          <select title="status" value={status} onChange={(e) => setStatus(e.target.value)} disabled>
             <option value="pending">Pendente</option>
             <option value="progress">Em Progresso</option>
             <option value="completed">Concluída</option>
@@ -215,7 +217,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ request, onClose, onUpdate })
             type="text"
             placeholder="ID do Equipamento"
             value={equipamentoId}
-            onChange={(e) => setEquipamentoId(Number(e.target.value))}
+            onChange={(e) => setEquipamentoId(e.target.value)}
             disabled
           />
           <div className={styles.modalActions}>
@@ -243,8 +245,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ request, onClose, onDelete })
           Tem certeza que deseja excluir a solicitação com descrição <strong>{request.descricao}</strong>?
         </p>
         <div className={styles.modalActions}>
-          <button onClick={onDelete}>Confirmar</button>
-          <button onClick={onClose}>Cancelar</button>
+          <button type="button" onClick={onDelete}>Confirmar</button>
+          <button type="button" onClick={onClose}>Cancelar</button>
         </div>
       </div>
     </div>

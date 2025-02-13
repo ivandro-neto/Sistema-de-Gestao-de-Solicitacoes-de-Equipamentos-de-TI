@@ -54,6 +54,7 @@ const InventoryVerification: React.FC = () => {
             <p>Carregando equipamentos...</p>
           ) : (
             <select
+            title="Equipamento"
               value={equipmentId}
               onChange={(e) => setEquipmentId(e.target.value)}
               className={styles.select}
@@ -65,7 +66,7 @@ const InventoryVerification: React.FC = () => {
               ))}
             </select>
           )}
-          <button onClick={handleVerify} className={styles.verifyButton}>
+          <button type="button" onClick={handleVerify} className={styles.verifyButton}>
             Verificar
           </button>
         </div>

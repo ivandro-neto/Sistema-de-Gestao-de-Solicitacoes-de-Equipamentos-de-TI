@@ -1,10 +1,11 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
-import { getSolicitacaoById, deleteSolicitacao } from "../../../api/requests";
+import { getSolicitacaoById } from "../../../api/requests";
 import { getHistoricos } from "../../../api/histories";
-import { RequestDetailsType } from "../../../utils/Model";
+import type { RequestDetailsType } from "../../../utils/Model";
 
 const RequestDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,11 +13,11 @@ const RequestDetails: React.FC = () => {
   const [historicos, setHistoricos] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDetailsAndHistory = async () => {
       try {
+      //@ts-ignore
         const reqData = await getSolicitacaoById(id!);
         setRequest(reqData);
         const allHist = await getHistoricos();
@@ -35,17 +36,7 @@ const RequestDetails: React.FC = () => {
     fetchDetailsAndHistory();
   }, [id]);
 
-  const handleDelete = async () => {
-    if (window.confirm("Deseja realmente excluir esta solicitação?")) {
-      try {
-        await deleteSolicitacao(id);
-        navigate("/requests");
-      } catch (err) {
-        console.error(err);
-        setError("Erro ao excluir a solicitação.");
-      }
-    }
-  };
+
 
   if (loading) {
     return (

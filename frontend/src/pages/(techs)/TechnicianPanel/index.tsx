@@ -1,9 +1,10 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getAtribuicaoByUserId } from "../../../api/assigns";
-import { AssignedRequest } from "../../../utils/Model"; // Exemplo de interface AssignedRequest
+import type { AssignedRequest } from "../../../utils/Model"; // Exemplo de interface AssignedRequest
 
 const TechnicianPanel: React.FC = () => {
   const [assignments, setAssignments] = useState<AssignedRequest[]>([]);
@@ -80,7 +81,8 @@ const TechnicianPanel: React.FC = () => {
                   <td>{new Date(assignment.solicitacao.createdAt).toLocaleDateString()}</td>
                   <td>
                     <button
-                      onClick={() => handleUpdateStatus(assignment?.solicitacao?.id)}
+                    type="button"
+                      onClick={() => handleUpdateStatus(assignment?.solicitacao?.id || "")}
                       className={styles.updateButton}
                     >
                       Atualizar Status

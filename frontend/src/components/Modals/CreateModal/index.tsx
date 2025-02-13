@@ -1,21 +1,23 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
+
 import styles from "./css/style.module.css";
 import { getEquipamentos } from "../../../api/equipaments";
 
 interface Equipment {
-  id: number;
+  id: string;
   nome: string;
   // Outros campos se necessário
 }
 
 interface CreateModalProps {
   onClose: () => void;
-  onCreate: (data: { descricao: string; equipamentoId: number }) => void;
+  onCreate: (data: { descricao: string; equipamentoId: string }) => void;
 }
 
 const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
   const [descricao, setDescricao] = useState("");
-  const [equipamentoId, setEquipamentoId] = useState<number>(0);
+  const [equipamentoId, setEquipamentoId] = useState<string>("");
   const [equipamentos, setEquipamentos] = useState<Equipment[]>([]);
   const [loadingEquip, setLoadingEquip] = useState<boolean>(true);
   const [errorEquip, setErrorEquip] = useState<string>("");
@@ -61,8 +63,9 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
               required
             />
             <select
+              title="Equipamento"
               value={equipamentoId}
-              onChange={(e) => setEquipamentoId(Number(e.target.value))}
+              onChange={(e) => setEquipamentoId(e.target.value)}
               required
             >
               {equipamentos.map((equip) => (

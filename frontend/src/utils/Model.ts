@@ -47,6 +47,7 @@ export interface Report {
 }
 
 export interface Equipamento{
+  id: string;
   nome : string;
   descricao : string
   componentes : EquipamentoComponent[]

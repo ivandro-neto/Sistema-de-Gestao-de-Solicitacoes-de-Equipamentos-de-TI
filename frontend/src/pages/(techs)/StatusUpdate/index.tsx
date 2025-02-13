@@ -1,9 +1,10 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getSolicitacaoById, updateSolicitacaoStatus } from "../../../api/requests";
-import { Request } from "../../../utils/Model";
+import type { Request } from "../../../utils/Model";
 
 const StatusUpdate: React.FC = () => {
   const { id } = useParams<{id : string}>();
@@ -16,7 +17,7 @@ const StatusUpdate: React.FC = () => {
   useEffect(() => {
     const fetchRequest = async () => {
       try {
-        const data: Request = await getSolicitacaoById(id);
+        const data: Request = await getSolicitacaoById(id || "");
         setRequest(data);
         setNewStatus(data.status);
       } catch (err) {
@@ -32,7 +33,7 @@ const StatusUpdate: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateSolicitacaoStatus(id, newStatus);
+      await updateSolicitacaoStatus(id || "", newStatus);
       navigate("/tech/panel");
     } catch (err) {
       console.error(err);

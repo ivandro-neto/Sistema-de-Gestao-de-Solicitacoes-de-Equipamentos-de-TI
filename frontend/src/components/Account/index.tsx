@@ -1,5 +1,7 @@
 import styles from './css/style.module.css';
-import AccountIcon from "../AccountIcon"
+// @ts-ignore
+import AccountIcon from "../AccountIcon";
+
 
 interface IExpandedProps{
   image:string;

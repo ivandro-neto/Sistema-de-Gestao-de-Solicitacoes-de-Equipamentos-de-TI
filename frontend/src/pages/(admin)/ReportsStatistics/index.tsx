@@ -23,11 +23,15 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
 const ReportsStatistics: React.FC = () => {
+  //@ts-ignore
   const [performanceData, setPerformanceData] = useState<any>(null);
+  //@ts-ignore
   const [inventoryData, setInventoryData] = useState<any>(null);
+  //@ts-ignore
   const [requestsData, setRequestsData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  //@ts-ignore
   const [genMessage, setGenMessage] = useState<string>("");
 
 
