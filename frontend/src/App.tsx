@@ -13,8 +13,12 @@ import RequestsListUser from './pages/(users)/RequestListPage';
 import TechnicianPanel from './pages/(techs)/TechnicianPanel';
 import StatusUpdate from './pages/(techs)/StatusUpdate';
 import RequestDetails from './pages/(default)/RequestDetailsPage';
-import ReportsList from './pages/(admin)/ReportList';
 import ReportDetail from './pages/(admin)/ReportsStatistics';
+import ReportsStatistics from './pages/(admin)/ReportsStatistics';
+import InventoryList from './pages/(techs)/InventoryListPage';
+import InventoryVerification from './pages/(techs)/InventoryVerification';
+import InventoryListAdmin from './pages/(admin)/InventoryListPage';
+import Inbox from './pages/Inbox';
 
 function App() {
   return (
@@ -24,15 +28,21 @@ function App() {
         <Route element={<UserManagement/>} path='admin/user/managment'/>
         <Route element={<Dashboard/>} path='admin/dashboard'/>
         <Route element={<RequestsList/>} path='admin/requests'/>
-        <Route element={<ReportsList/>} path='admin/reports'/>
+        <Route element={<ReportsStatistics/>} path='admin/reports'/>
+        <Route element={<InventoryListAdmin/>} path='admin/inventory'/>
+        <Route element={<InventoryVerification/>} path='admin/inventory/check'/>
 
         {/* techs routes */}
         <Route element={<DashboardTechnician/>} path='tech/dashboard'/>
         <Route element={<RequestsListTechs/>} path='tech/requests'/>
         <Route element={<TechnicianPanel/>} path='tech/panel'/>
+        <Route element={<InventoryList/>} path='tech/inventory'/>
+        <Route element={<InventoryVerification/>} path='tech/inventory/check'/>
         {/* user routes */}
         <Route element={<DashboardUser/>} path='user/dashboard'/>
         <Route element={<RequestsListUser/>} path='user/requests'/>
+
+        <Route element={<Inbox/>} path='inbox'/>
 
         {/* dynamic */}
         <Route element={<RequestDetails/>} path='request/:id'/>

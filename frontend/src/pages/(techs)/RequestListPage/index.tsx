@@ -56,7 +56,7 @@ const RequestsListTechs: React.FC = () => {
         {assignments.length === 0 ? (
           <p className={styles.noData}>Nenhuma solicitação atribuída encontrada.</p>
         ) : (
-          <table className={styles.table}>
+          <table className={`${styles.table} table`}>
             <thead>
               <tr>
                 <th>ID</th>

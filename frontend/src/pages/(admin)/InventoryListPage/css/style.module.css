@@ -1,0 +1,39 @@
+/* InventoryList.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: red;
+}
+.noData {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.table th {
+  background-color: #f8f8f8;
+}

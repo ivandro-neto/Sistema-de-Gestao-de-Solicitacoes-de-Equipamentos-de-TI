@@ -1,5 +1,6 @@
 import axios from "axios";
-import { API_URL_ASSIGN} from "./base";
+import { API_URL_ASSIGN } from "./base";
+import { createNotificacao } from "./notifications";
 
 // Obtém todas as atribuições
 export const getAtribuicoes = async () => {
@@ -20,8 +21,15 @@ export const getAtribuicaoByUserId = async (id: string) => {
 };
 
 // Cria uma nova atribuição (necessita de solicitacaoId e tecnicoId)
+// Após criar a atribuição, envia automaticamente uma notificação ao técnico
 export const createAtribuicao = async (data: { solicitacaoId: string; tecnicoId: string }) => {
   const response = await axios.post(`${API_URL_ASSIGN}/`, data);
+  // Envia notificação automática ao técnico
+  await createNotificacao({
+    usuarioId: data.tecnicoId,
+    destinatario: "", // Preencha com o e-mail do técnico, se disponível
+    mensagem: `Você recebeu uma nova atribuição para a solicitação ${data.solicitacaoId}.`
+  });
   return response.data;
 };
 

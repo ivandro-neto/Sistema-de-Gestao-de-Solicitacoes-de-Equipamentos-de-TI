@@ -1,15 +1,33 @@
-// src/components/estoque/InventoryVerification.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import styles from "./css/style.module.css";
-import { getEquipamentoById } from "../../../api/equipaments";
+import { getEquipamentoById, getEquipamentos } from "../../../api/equipaments";
 import { Equipamento } from "../../../utils/Model";
 
 const InventoryVerification: React.FC = () => {
   const [equipmentId, setEquipmentId] = useState<string>("");
   const [equipment, setEquipment] = useState<Equipamento | null>(null);
+  const [equipments, setEquipments] = useState<Equipamento[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingEquipments, setLoadingEquipments] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchEquipments = async () => {
+      try {
+        const data = await getEquipamentos();
+        setEquipments(data);
+        if (data.length > 0) {
+          setEquipmentId(data[0].id);
+        }
+      } catch (err) {
+        setError("Erro ao buscar a lista de equipamentos.");
+      } finally {
+        setLoadingEquipments(false);
+      }
+    };
+    fetchEquipments();
+  }, []);
 
   const handleVerify = async () => {
     if (!equipmentId) return;
@@ -20,6 +38,7 @@ const InventoryVerification: React.FC = () => {
       setEquipment(data);
     } catch (err) {
       setError("Erro ao buscar informações do equipamento.");
+      setEquipment(null);
     } finally {
       setLoading(false);
     }
@@ -29,16 +48,28 @@ const InventoryVerification: React.FC = () => {
     <Layout>
       <div className={styles.container}>
         <h2 className={styles.title}>Verificação de Estoque</h2>
-        <div className={styles.formGroup}>
-          <input
-            type="text"
-            value={equipmentId}
-            onChange={(e) => setEquipmentId(e.target.value)}
-            placeholder="Digite o ID do equipamento"
-          />
-          <button onClick={handleVerify}>Verificar</button>
+        <div className={styles.equipmentsList}>
+          <h3>Selecione o Equipamento</h3>
+          {loadingEquipments ? (
+            <p>Carregando equipamentos...</p>
+          ) : (
+            <select
+              value={equipmentId}
+              onChange={(e) => setEquipmentId(e.target.value)}
+              className={styles.select}
+            >
+              {equipments.map((eq) => (
+                <option key={eq.id} value={eq.id}>
+                  {eq.nome}
+                </option>
+              ))}
+            </select>
+          )}
+          <button onClick={handleVerify} className={styles.verifyButton}>
+            Verificar
+          </button>
         </div>
-        {loading && <p>Carregando informações...</p>}
+        {loading && <p className={styles.loading}>Carregando informações...</p>}
         {error && <p className={styles.error}>{error}</p>}
         {equipment && (
           <div className={styles.equipmentDetails}>
@@ -55,9 +86,9 @@ const InventoryVerification: React.FC = () => {
               <tbody>
                 {equipment.componentes.map((ec) => (
                   <tr key={ec.id}>
-                    <td>{ec.componente.nome}</td>
+                    <td>{ec.componente?.nome}</td>
                     <td>{ec.quantidadeNecessaria}</td>
-                    <td>{ec.componente.quantidadeDisponivel}</td>
+                    <td>{ec.componente?.quantidadeDisponivel}</td>
                   </tr>
                 ))}
               </tbody>

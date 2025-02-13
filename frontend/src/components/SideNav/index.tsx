@@ -12,7 +12,7 @@ const SideNav = () => {
     <section className={styles.container}>
       <div className={styles.appName}>
         <img src="/logo.svg" alt="" className={styles.logo} />
-        <h1>Library App</h1>
+        <h1>TechEquip Request</h1>
       </div>
     <nav className={styles.navbar}>
       <ul className={styles.list}>
@@ -25,20 +25,20 @@ const SideNav = () => {
           }
         </li>
         <li className={styles.items}>
-          <LinkButton url={'/inbox'} content={'Inbox'}/>
+          <LinkButton url={'/inbox'} content={'Notificações'}/>
         </li>
         <li className={styles.items}>
           {
           user.type === Roles["tech"]  ? 
-          <LinkButton url={user.type === Roles["tech"] ?'/tech/requests': '/user/requests'} content={'Requests'}/>
+          <LinkButton url={user.type === Roles["tech"] ?'/tech/requests': '/user/requests'} content={'Solicitações'}/>
             : 
-            <LinkButton url={user.type === Roles["admin"] ?'/admin/requests': '/user/requests'} content={'Requests'}/>
+            <LinkButton url={user.type === Roles["admin"] ?'/admin/requests': '/user/requests'} content={'Solicitações'}/>
           }
         </li>
         {
            user.type === Roles["tech"]  ? 
            (<li className={styles.items}>
-           <LinkButton url={'/tech/panel'} content={'Assigns'}/>
+           <LinkButton url={'/tech/panel'} content={'Atribuições'}/>
           </li>) : ""
         }
         {
@@ -50,7 +50,31 @@ const SideNav = () => {
         {
            user.type === Roles["admin"]  ? 
            (<li className={styles.items}>
-           <LinkButton url={'/admin/user/managment'} content={'User Management'}/>
+           <LinkButton url={'/admin/user/managment'} content={'Utilizadores'}/>
+          </li>) : ""
+        }
+        {
+           user.type === Roles["admin"]  ? 
+           (<li className={styles.items}>
+           <LinkButton url={'/admin/inventory'} content={'Estoque'}/>
+          </li>) : ""
+        }
+        {
+           user.type === Roles["tech"]  ? 
+           (<li className={styles.items}>
+           <LinkButton url={'/tech/inventory'} content={'Estoque'}/>
+          </li>) : ""
+        }
+        {
+           user.type === Roles["tech"]  ? 
+           (<li className={styles.items}>
+           <LinkButton url={'/tech/inventory/check'} content={'Equipamentos'}/>
+          </li>) : ""
+        }
+        {
+           user.type === Roles["admin"]  ? 
+           (<li className={styles.items}>
+           <LinkButton url={'/admin/inventory/check'} content={'Equipamentos'}/>
           </li>) : ""
         }
         

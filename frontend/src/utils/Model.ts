@@ -45,3 +45,24 @@ export interface Report {
   dataGeracao: string;
   conteudo: string;
 }
+
+export interface Equipamento{
+  nome : string;
+  descricao : string
+  componentes : EquipamentoComponent[]
+}
+
+export interface Componente{
+  id :string             
+  nome :string
+  descricao:string
+  quantidadeDisponivel :number
+  unidadeMedida:string
+}
+
+export interface EquipamentoComponent{
+  id : string
+  quantidadeNecessaria : number
+  equipamento :Equipamento
+  componente:Componente   
+}

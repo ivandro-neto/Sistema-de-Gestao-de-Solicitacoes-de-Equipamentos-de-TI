@@ -19,7 +19,7 @@ export const getEquipamentoById = async (req: Request, res: Response): Promise<v
   try {
     const equipamento = await prisma.equipamento.findUnique({
       where: { id },
-      include: { componentes: true }
+      include: { componentes: {include : {componente : true}}}
     });
     if (equipamento) res.json(equipamento);
     else res.status(404).json({ error: 'Equipamento não encontrado' });

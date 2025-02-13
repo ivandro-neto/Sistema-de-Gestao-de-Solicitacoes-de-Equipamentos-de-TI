@@ -1,7 +1,8 @@
-import { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from './css/styles.module.css';
-import { login, register } from "../../../api/user";
+import styles from "./css/styles.module.css";
+import { register } from "../../../api/user";
+import { Roles } from "../../../utils/Roles";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -9,11 +10,10 @@ const RegisterPage: React.FC = () => {
   const [departamento, setDepartamento] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [roles, setRoles] = useState<string>("");
+  const [role, setRole] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,127 +26,111 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const user = register(username, email, password, departamento, roles)
-
-      if(user){
+      const user = await register(username, email, password, departamento, role);
+      if (user) {
         setSuccess("Registration successful.");
         navigate("/login");
+      } else {
+        setError("Error creating user!");
       }
-      setError("Error trying creating a user!")
-     
-    } catch (error: any) {
-      console.error(error);
-      setError(error.response?.data?.message || "Registration failed.");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.response?.data?.message || "Registration failed.");
     }
   };
 
-  const handleRoleSelection = (role: string) => {
-    setRoles(role);
-  };
-
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleRegister} className={styles.form}>
-        <h2>Register</h2>
+    <div className={styles.pageContainer}>
+      <div className={styles.registerCard}>
+        <h2 className={styles.title}>Criar Conta</h2>
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
-        <div className={styles.inputGroup}>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label>Department</label>
-          <input
-            type="text"
-            value={departamento}
-            onChange={(e) => setDepartamento(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.checkboxGroup}>
-          <label>Select Roles:</label>
-          <label>
+        <form onSubmit={handleRegister} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Username</label>
             <input
-              type="checkbox"
-              value="user"
-              checked={roles === "user"}
-              onChange={() => handleRoleSelection("user")}
+              type="text"
+              placeholder="Seu Nome"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className={styles.input}
+              required
             />
-            User
-          </label>
-          <label>
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Email</label>
             <input
-              type="checkbox"
-              value="admin"
-              checked={roles === "admin"}
-              onChange={() => handleRoleSelection("admin")}
+              type="email"
+              placeholder="Seu Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
+              required
             />
-            Admin
-          </label>
-          <label>
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Senha</label>
             <input
-              type="checkbox"
-              value="comer"
-              checked={roles === "comer"}
-              onChange={() => handleRoleSelection("comer")}
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              required
             />
-            Comercial
-          </label>
-          <label>
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Confirmar Senha</label>
             <input
-              type="checkbox"
-              value="tech"
-              checked={roles === "tech"}
-              onChange={() => handleRoleSelection("tech")}
+              type="password"
+              placeholder="Confirme a Senha"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={styles.input}
+              required
             />
-            Technician
-          </label>
-        </div>
-        <button type="submit" className={styles.button}>Register</button>
-      </form>
-      <p className={styles.registerLink}>
-        Already have an account?{" "}
-        <button type="button" onClick={() => navigate("/login")} className={styles.link}>
-          Login
-        </button>
-      </p>
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Departamento</label>
+            <input
+              type="text"
+              placeholder="Seu Departamento"
+              value={departamento}
+              onChange={(e) => setDepartamento(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Selecione seu Cargo</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className={styles.input}
+              required
+            >
+              <option value="">Selecione um cargo</option>
+              <option value="user">Usuário</option>
+              <option value="admin">Administrador</option>
+              <option value="comer">Comercial</option>
+              <option value="tech">Técnico</option>
+            </select>
+          </div>
+          <button type="submit" className={styles.button}>
+            Registrar
+          </button>
+        </form>
+        <p className={styles.loginLink}>
+          Já possui uma conta?{" "}
+          <button
+            type="button"
+            onClick={() => navigate("/login")}
+            className={styles.link}
+          >
+            Login
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

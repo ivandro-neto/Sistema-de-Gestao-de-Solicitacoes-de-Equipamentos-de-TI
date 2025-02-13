@@ -46,7 +46,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
 
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
+      <div className={"modal"}>
         <h3>Criar Solicitação</h3>
         {loadingEquip ? (
           <p>Carregando equipamentos...</p>

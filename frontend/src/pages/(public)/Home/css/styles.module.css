@@ -1,129 +1,298 @@
-/* Container geral */
-.container {
-  position: relative;
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --text-color: #333;
+  --bg-color: #ffffff;
+  --white: #fff;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+  --font-family: "Poppins", sans-serif;
+}
+
+/* Layout Geral */
+.pageContainer {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Seção de Herói */
+.heroSection {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  padding: 80px 20px;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: var(--white);
+}
+
+.heroContent {
+  flex: 1;
+  max-width: 600px;
+  margin: 20px;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--white);
+}
+
+.heroSubtitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.heroDescription {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.ctaButton,
+.outlineButton {
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Botão CTA */
+.ctaButton {
+  background-color: var(--white);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+.ctaButton:hover {
+  background-color: #ecf0f1;
+}
+
+/* Botão com Borda */
+.outlineButton {
+  background-color: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  font-weight: 600;
+}
+.outlineButton:hover {
+  background-color: var(--white);
+  color: var(--primary-color);
+}
+
+.heroImageWrapper {
+  flex: 1;
+  max-width: 500px;
+  margin: 20px;
+  text-align: center;
+}
+
+.heroImage {
   width: 100%;
-  color: #0a0a0a;
-  font-family: "Arial", sans-serif;
-  overflow: hidden;
-  
+  max-width: 500px;
 }
 
-.container::after{
-  content: '';
-  position: absolute;
-  width: 100dvw;
-  background-color: #475bcc;
-  top: 0;
-  left: 0;
-  height: 100dvh;
-  z-index: -2;
-  transform: rotate(45deg) translate(-70dvw, 20dvh);
-  background: url(/public/bg.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: contrast(150%);
-
+/* Seções Gerais */
+.sectionContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
 }
 
-.container::before{
-  content: '';
-  position: absolute;
-  width: 100dvw;
-  background-color: #475bcc;
-  top: 0;
-  left: 0;
-  height: 100dvh;
-  z-index: -2;
-  transform: rotate(45deg) translate(70dvw, -20dvh);
-  background: url(/public/bg.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: contrast(150%) grayscale(1);
+.sectionTitle {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: var(--text-color);
 }
 
-/* Área de conteúdo */
-.content {
+.sectionText {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Sobre */
+.aboutSection {
+  background-color: var(--white);
+  margin-bottom: 50px;
+  padding: 50px 20px;
+  border-radius: var(--border-radius);
+}
+
+/* Recursos (Features) */
+.featuresSection {
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: var(--white);
+  padding: 50px 20px;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.featureCard {
+  background-color: var(--white);
+  padding: 30px 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: transform var(--transition-speed);
+}
+
+.featureCard:hover {
+  transform: translateY(-3px);
+}
+
+.featureIcon {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.featureTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.featureText {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Depoimentos (Testimonials) */
+.testimonialsSection {
+  background-color: var(--white);
+  margin-bottom: 50px;
+  border-radius: var(--border-radius);
+  padding: 50px 20px;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.testimonialCard {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+
+  padding: 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .4);
+}
+
+.testimonialAvatar {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.testimonialText {
+  font-size: 16px;
+  color: #f1f1f1;
+  margin-bottom: 10px;
+}
+
+.testimonialAuthor {
+  font-size: 14px;
+  color: #93daf0;
+  font-weight: bold;
+}
+
+/* Seção de Contato */
+.contactSection {
+  margin-bottom: 50px;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: var(--border-radius);
+  color: var(--white);
+  text-align: center;
+}
+
+.contactSection h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: var(--white);
+}
+
+.contactSection p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: var(--white);
+}
+
+/* Formulário de Contato */
+.contactForm {
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  text-align: center;
-  max-width: 700px;
-  background: rgba(255, 255, 255, 0.5);
-  padding: 2rem 3rem;
-  border-radius: 10px;
-  overflow: hidden;
+  gap: 20px;
 }
-.content img{
-  width: 64px;
-}
-.content::before{
-  content: '';
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
-  top: 0;
-  left: 0;
+
+.formInput,
+.formTextarea {
   width: 100%;
-  height: 100%;
-  z-index: -1;
-  filter: blur(20px);
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+  color: var(--text-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Título principal */
-.title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-
-/* Descrição */
-.description {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-/* Container para os botões */
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* Botão principal */
-.button {
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #475bcc;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.button:hover {
-  background-color: #4c4fe5;
-}
-
-/* Botão com contorno */
-.buttonOutline {
-  padding: 0.8rem 1.5rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  color: #202020;
+.formInput:focus,
+.formTextarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
   outline: none;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+
+/* Botão do formulário */
+.contactForm button {
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.contactForm button:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}

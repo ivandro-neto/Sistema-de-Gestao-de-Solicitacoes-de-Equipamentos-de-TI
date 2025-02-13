@@ -133,7 +133,7 @@ const RequestsListUser: React.FC = () => {
         {requests.length === 0 ? (
           <p className={styles.noData}>Nenhuma solicitação encontrada.</p>
         ) : (
-          <table className={styles.table}>
+          <table className={`${styles.table} table`}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -153,7 +153,7 @@ const RequestsListUser: React.FC = () => {
                   <td>
                     <a href={`/request/${req.id}`} className={styles.detailLink}>Ver Detalhes</a>
                     <button onClick={() => openUpdateModal(req)} className={styles.updateButton}>Atualizar</button>
-                    <button onClick={() => openDeleteModal(req)} className={styles.deleteButton}>Deletar</button>
+                    <button onClick={() => openDeleteModal(req)} className={styles.deleteButton}>Cancelar </button>
                   </td>
                 </tr>
               ))}
@@ -197,7 +197,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ request, onClose, onUpdate })
 
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
+      <div className={"modal"}>
         <h3>Atualizar Solicitação</h3>
         <form onSubmit={handleSubmit}>
           <textarea
@@ -237,13 +237,13 @@ interface DeleteModalProps {
 const DeleteModal: React.FC<DeleteModalProps> = ({ request, onClose, onDelete }) => {
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
+      <div className={"modal"}>
         <h3>Excluir Solicitação</h3>
         <p>
           Tem certeza que deseja excluir a solicitação com descrição <strong>{request.descricao}</strong>?
         </p>
         <div className={styles.modalActions}>
-          <button onClick={onDelete}>Excluir</button>
+          <button onClick={onDelete}>Confirmar</button>
           <button onClick={onClose}>Cancelar</button>
         </div>
       </div>

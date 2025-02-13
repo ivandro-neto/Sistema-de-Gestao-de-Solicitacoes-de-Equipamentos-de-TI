@@ -40,3 +40,244 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Variáveis Globais */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --error-color: #e74c3c;
+  --text-color: #333;
+  --background-color: #ffffff;
+  --font-family: 'Arial', sans-serif;
+  --border-radius: 4px;
+  --transition-speed: 0.3s;
+}
+
+/* Reset de CSS */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos Globais */
+body {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* Parágrafos */
+p {
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+/* Botões */
+button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Inputs, Textareas e Selects */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Classes Utilitárias */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+
+/* Estilos para Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table thead {
+  background-color: #f8f8f8;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+
+table th {
+  font-weight: bold;
+  color: #333;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilos para Modais */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: var(--border-radius, 4px);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-color, #333);
+}
+
+.modal-body {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: var(--text-color, #555);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-footer button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--border-radius, 4px);
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color var(--transition-speed, 0.3s);
+}
+
+.modal-footer button:hover {
+  opacity: 0.9;
+}
+
+/* Exemplo de botões de ação dentro de modal */
+.modal-footer .btn-primary {
+  background-color: var(--primary-color, #3498db);
+  color: #fff;
+}
+
+.modal-footer .btn-secondary {
+  background-color: var(--secondary-color, #2ecc71);
+  color: #fff;
+}
+
+.modal-footer .btn-danger {
+  background-color: var(--error-color, #e74c3c);
+  color: #fff;
+}
+
+.exit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50px;
+  transition: background-color 300ms;
+  background-color: #ebebeb;
+}
+
+.exit:hover{
+  background-color: #be0c0c;
+}
+
+.exit:hover img{
+  filter: invert(1);
+  animation: shake ease 300ms;
+}
+
+@keyframes shake {
+  0%{
+    transform: rotate(30deg);
+  }
+  50%{
+    transform: rotate(-30deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}

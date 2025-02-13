@@ -7,3 +7,4 @@ export const API_URL_EQUIPAMENT = `${API_URL}/equipamentos`
 export const API_URL_COMPONENT = `${API_URL}/componentes`
 export const API_URL_REPORT = `${API_URL}/relatorios`
 export const API_URL_HISTORY = `${API_URL}/historico`
+export const API_URL_NOTIFICATION = `${API_URL}/notificacoes`

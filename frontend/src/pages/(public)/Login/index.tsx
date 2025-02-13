@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Roles } from "../../../utils/Roles";
 import styles from "./css/styles.module.css";
@@ -14,65 +14,64 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setError(null);
     try {
-     await login(email, password);
-     const sessionData = localStorage.getItem("session") 
-     const session = sessionData ? JSON.parse(sessionData) :  null
-      if(!session)
+      await login(email, password);
+      const sessionData = localStorage.getItem("session");
+      const session = sessionData ? JSON.parse(sessionData) : null;
+      if (!session) {
         setError("Login failed. Check your credentials.");
-      
-      if (Roles["user"] ===  session.type) {
+        return;
+      }
+      if (Roles["user"] === session.type) {
         navigate("/user/dashboard");
-      }
-      if (Roles["comer"] ===  session.type) {
+      } else if (Roles["comer"] === session.type) {
         navigate("/comercial");
-      }
-      if (Roles["tech"] ===  session.type) {
+      } else if (Roles["tech"] === session.type) {
         navigate("/tech/dashboard");
-      }
-       if (Roles["admin"] ===  session.type) {
+      } else if (Roles["admin"] === session.type) {
         navigate("/admin/dashboard");
       }
-    } catch (error) {
-      setError("Login failed. Check your credentials."+ error);
+    } catch (err) {
+      setError("Login failed. Check your credentials.");
     }
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleLogin} className={styles.form}>
-        <h2>Login</h2>
+    <div className={styles.pageContainer}>
+      <div className={styles.loginCard}>
+        <h2 className={styles.title}>Login</h2>
         {error && <p className={styles.error}>{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.input}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-          required
-        />
-        <button type="submit" className={styles.button}>
-          Login
-        </button>
-      </form>
-
-      <p className={styles.registerLink}>
-        Criar uma nova conta?{" "}
-        <button
-          type="button"
-          onClick={() => navigate("/register")}
-          className={styles.link}
-        >
-          Register
-        </button>
-      </p>
+        <form onSubmit={handleLogin} className={styles.form}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.input}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.input}
+            required
+          />
+          <button type="submit" className={styles.button}>
+            Entrar
+          </button>
+        </form>
+        <p className={styles.registerText}>
+          Não possui conta?{" "}
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className={styles.registerLink}
+          >
+            Registrar
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

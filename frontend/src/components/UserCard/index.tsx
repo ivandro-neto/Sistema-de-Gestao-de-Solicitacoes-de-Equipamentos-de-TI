@@ -14,7 +14,7 @@ const UserCard = ({user}) =>{
   return(
     <div className={styles.container}>
       <Expanded image="" accountname={user.name} email={user.email}/>
-      <button type="button" title="exit" className={styles.exit} onClick={handleLogout}><img src="/icons/exit.svg" alt="" /></button>
+      <button type="button" title="exit" className={"exit"} onClick={handleLogout}><img src="/icons/exit.svg" alt="sair" /></button>
     </div>
   )
 }

@@ -3,21 +3,28 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getSolicitacaoById, deleteSolicitacao } from "../../../api/requests";
-import { RequestDetailsType } from "../../../utils/Model"; // Defina a interface RequestDetailsType conforme sua estrutura
-
+import { getHistoricos } from "../../../api/histories";
+import { RequestDetailsType } from "../../../utils/Model";
 
 const RequestDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [request, setRequest] = useState<RequestDetailsType | null>(null);
+  const [historicos, setHistoricos] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDetails = async () => {
+    const fetchDetailsAndHistory = async () => {
       try {
-        const data = await getSolicitacaoById(id);
-        setRequest(data);
+        const reqData = await getSolicitacaoById(id);
+        setRequest(reqData);
+        const allHist = await getHistoricos();
+        // Converte ambos os valores para string para garantir a comparação
+        const filteredHist = allHist.filter(
+          (hist: any) => hist.solicitacaoId === id
+        );
+        setHistoricos(filteredHist);
       } catch (err) {
         console.error(err);
         setError("Erro ao buscar detalhes da solicitação.");
@@ -25,7 +32,7 @@ const RequestDetails: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchDetails();
+    fetchDetailsAndHistory();
   }, [id]);
 
   const handleDelete = async () => {
@@ -71,17 +78,36 @@ const RequestDetails: React.FC = () => {
         <div className={styles.details}>
           <p><strong>ID:</strong> {request.id}</p>
           <p><strong>Status:</strong> {request.status}</p>
-          <p><strong>Data:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+          <p>
+            <strong>Data:</strong> {new Date(request.createdAt).toLocaleDateString()}
+          </p>
           <p><strong>Descrição:</strong> {request.descricao}</p>
-          {/* Adicione outros campos se necessário */}
         </div>
-        <div className={styles.actions}>
-          <button onClick={handleDelete} className={styles.deleteButton}>
-            Excluir Solicitação
-          </button>
-          <button onClick={() => navigate(`/requests/${request.id}/edit`)} className={styles.editButton}>
-            Editar Solicitação
-          </button>
+     
+        <div className={styles.history}>
+          <h3>Histórico de Solicitações</h3>
+          {historicos.length === 0 ? (
+            <p className={styles.noData}>Nenhum histórico encontrado para esta solicitação.</p>
+          ) : (
+            <table className={styles.historyTable}>
+              <thead>
+                <tr>
+                  <th>Status Anterior</th>
+                  <th>Status Novo</th>
+                  <th>Data de Alteração</th>
+                </tr>
+              </thead>
+              <tbody>
+                {historicos.map((hist) => (
+                  <tr key={hist.id}>
+                    <td>{hist.statusAnterior}</td>
+                    <td>{hist.statusNovo}</td>
+                    <td>{new Date(hist.dataAlteracao).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </Layout>

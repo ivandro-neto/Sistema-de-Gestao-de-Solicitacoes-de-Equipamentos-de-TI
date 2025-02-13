@@ -15,6 +15,7 @@ model Usuario {
   tipo         Int             // 'Solicitante', 'Técnico', 'Administrador'
   departamento String?
   solicitacoes Solicitation[]  @relation("UsuarioSolicitations")
+  notificacoes Notificacao[]  @relation("Notificacao")
   tecnico      Tecnico?
 }
 
@@ -90,4 +91,14 @@ model Relatorio {
   tipoRelatorio String
   dataGeracao   DateTime   @default(now())
   conteudo      String
+}
+
+model Notificacao {
+  id            String    @id @default(uuid())
+  usuarioId     String
+  destinatario  String
+  mensagem      String
+  lida          Boolean   @default(false)
+  data          DateTime  @default(now())
+  usuario       Usuario   @relation(name: "Notificacao", fields: [usuarioId], references: [id])
 }
