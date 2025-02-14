@@ -42,7 +42,7 @@ function App() {
         <Route element={<DashboardUser/>} path='/user/dashboard'/>
         <Route element={<RequestsListUser/>} path='/user/requests'/>
 
-        <Route element={<Inbox/>} path='inbox'/>
+        <Route element={<Inbox/>} path='/inbox'/>
 
         {/* dynamic */}
         <Route element={<RequestDetails/>} path='/request/:id'/>
