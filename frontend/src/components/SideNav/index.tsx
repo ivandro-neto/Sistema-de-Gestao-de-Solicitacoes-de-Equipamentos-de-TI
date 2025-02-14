@@ -41,7 +41,7 @@ const SideNav = () => {
           </li>) : ""
         }
         {
-           user.type === Roles.admin || Roles.comer  ? 
+           user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/reports'} content={'Relatórios'}/>
           </li>) : ""
@@ -53,7 +53,7 @@ const SideNav = () => {
           </li>) : ""
         }
         {
-           user.type === Roles.admin || Roles.comer ? 
+           user.type === Roles.admin ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/inventory'} content={'Estoque'}/>
           </li>) : ""
@@ -71,7 +71,7 @@ const SideNav = () => {
           </li>) : ""
         }
         {
-           user.type === Roles.admin || Roles.comer ? 
+           user.type === Roles.admin ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/inventory/check'} content={'Equipamentos'}/>
           </li>) : ""
