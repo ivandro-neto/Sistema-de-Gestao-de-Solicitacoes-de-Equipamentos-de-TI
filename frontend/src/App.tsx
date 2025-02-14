@@ -20,6 +20,8 @@ import InventoryVerification from './pages/(techs)/InventoryVerification';
 import InventoryListAdmin from './pages/(admin)/InventoryListPage';
 import Inbox from './pages/Inbox';
 import ReceiptsPage from './pages/(users)/ReceiptsPage';
+import ManualAssignmentPage from './pages/(admin)/ManualAssignPage';
+import AssignmentsListPage from './pages/(admin)/AssignmentListPage';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route element={<RequestsList/>} path='/admin/requests'/>
         <Route element={<ReportsStatistics/>} path='/admin/reports'/>
         <Route element={<InventoryListAdmin/>} path='/admin/inventory'/>
+        <Route element={<ManualAssignmentPage/>} path='/admin/tech/assigns'/>
+        <Route element={<AssignmentsListPage/>} path='/admin/assigns'/>
         <Route element={<InventoryVerification/>} path='/admin/inventory/check'/>
 
         {/* techs routes */}

@@ -67,8 +67,11 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
     const newUsuario = await prisma.usuario.create({
       data: { nome, email, senha, tipo, departamento }
     });
+    let tecnico = null
+    if(newUsuario.tipo === 3241)
+      tecnico = await prisma.tecnico.create({data : {usuarioId : newUsuario.email, especialidade : 'Hardware', status : "available"}});
     //@ts-ignore
-   return res.status(201).json(newUsuario);
+   return res.status(201).json(newUsuario, tecnico);
   } catch (error) {
     //@ts-ignore
     return res.status(500).json({ error: 'Erro ao criar usuário'+ error });
