@@ -34,7 +34,7 @@
   flex: 1;
   max-width: 600px;
   margin: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .heroTitle {
@@ -57,7 +57,7 @@
 .heroButtons {
   display: flex;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .ctaButton,

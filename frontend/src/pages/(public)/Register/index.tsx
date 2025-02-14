@@ -122,13 +122,12 @@ const RegisterPage: React.FC = () => {
         </form>
         <p className={styles.loginLink}>
           Já possui uma conta?{" "}
-          <button
-            type="button"
-            onClick={() => navigate("/login")}
+          <a
+            href="/login"            
             className={styles.link}
           >
-            Login
-          </button>
+            Entrar
+          </a>
         </p>
       </div>
     </div>
