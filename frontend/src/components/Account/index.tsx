@@ -10,7 +10,7 @@ interface IExpandedProps{
 }
 interface IShortProps{
   image:string;
-  accountname: String;
+  accountname: string;
 }
 
 

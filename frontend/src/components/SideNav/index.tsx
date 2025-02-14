@@ -11,7 +11,6 @@ const SideNav = () => {
   return (
     <section className={styles.container}>
       <div className={styles.appName}>
-        <img src="/logo.svg" alt="" className={styles.logo} />
         <h1>TechEquip Request</h1>
       </div>
     <nav className={styles.navbar}>

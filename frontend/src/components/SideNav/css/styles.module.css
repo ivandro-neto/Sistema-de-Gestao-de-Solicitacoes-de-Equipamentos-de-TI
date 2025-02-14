@@ -20,8 +20,9 @@
   align-items: center;
   gap: 1rem;
 }
-.logo{
-  width: 28px;
+
+.appName h1{
+  font-size: 1rem;
 }
 .list {
   list-style: none;
