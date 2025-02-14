@@ -12,6 +12,7 @@ export interface Request {
   id?: string;
   solicitanteId: string;
   equipamentoId: string;
+  techId: string;
   descricao: string;
   status: string;
   createdAt: string;

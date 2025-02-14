@@ -181,7 +181,7 @@ export const getSolicitacaoByUserId = async (req: Request, res: Response): Promi
   try {
     const solicitacao = await prisma.solicitation.findMany({
       where: { solicitanteId: id },
-      include: { usuario: true }
+      include: { usuario: {include : {tecnico : true}} }
     });
     if (solicitacao) res.json(solicitacao);
     else res.status(404).json({ error: 'Solicitação não encontrada.' });

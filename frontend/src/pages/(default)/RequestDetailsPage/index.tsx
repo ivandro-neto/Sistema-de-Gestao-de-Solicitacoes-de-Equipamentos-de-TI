@@ -20,6 +20,7 @@ const RequestDetails: React.FC = () => {
       //@ts-ignore
         const reqData = await getSolicitacaoById(id!);
         setRequest(reqData);
+        
         const allHist = await getHistoricos();
         // Converte ambos os valores para string para garantir a comparação
         const filteredHist = allHist.filter(
@@ -73,6 +74,7 @@ const RequestDetails: React.FC = () => {
             <strong>Data:</strong> {new Date(request.createdAt).toLocaleDateString()}
           </p>
           <p><strong>Descrição:</strong> {request.descricao}</p>
+          <p><strong>Tecnico ID:</strong> {request.techId}</p>
         </div>
      
         <div className={styles.history}>
