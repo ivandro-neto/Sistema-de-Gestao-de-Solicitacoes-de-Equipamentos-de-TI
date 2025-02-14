@@ -26,12 +26,12 @@ export default function UserManagement() {
   const handleAddUser = () => {
     if (!name || !email) return;
     const newUser: User = {
-      nome : name,
+      name : name,
       email,
       tipo : Roles[role],
       departamento
     };
-    register(newUser.nome, newUser.email,"senha123#", newUser.departamento, role)
+    register(newUser.name, newUser.email,"senha123#", newUser.departamento, role)
     setUsers([...users, newUser]);
     setName("");
     setEmail("");
@@ -75,7 +75,7 @@ export default function UserManagement() {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>{user.nome}</td>
+              <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{RolesExtended[user.tipo]}</td>
               <td>
