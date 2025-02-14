@@ -19,6 +19,7 @@ import InventoryList from './pages/(techs)/InventoryListPage';
 import InventoryVerification from './pages/(techs)/InventoryVerification';
 import InventoryListAdmin from './pages/(admin)/InventoryListPage';
 import Inbox from './pages/Inbox';
+import ReceiptsPage from './pages/(users)/ReceiptsPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         {/* user routes */}
         <Route element={<DashboardUser/>} path='/user/dashboard'/>
         <Route element={<RequestsListUser/>} path='/user/requests'/>
+        <Route element={<ReceiptsPage/>} path='/user/reciepts'/>
 
         <Route element={<Inbox/>} path='/inbox'/>
 

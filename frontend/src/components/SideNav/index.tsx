@@ -41,6 +41,12 @@ const SideNav = () => {
           </li>) : ""
         }
         {
+           user.type === Roles.user  ? 
+           (<li className={styles.items}>
+           <LinkButton url={'/user/reciepts'} content={'Recibos'}/>
+          </li>) : ""
+        }
+        {
            user.type === Roles.admin  ? 
            (<li className={styles.items}>
            <LinkButton url={'/admin/reports'} content={'Relatórios'}/>
