@@ -25,33 +25,33 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* admin routes */}
-        <Route element={<UserManagement/>} path='admin/user/managment'/>
-        <Route element={<Dashboard/>} path='admin/dashboard'/>
-        <Route element={<RequestsList/>} path='admin/requests'/>
-        <Route element={<ReportsStatistics/>} path='admin/reports'/>
-        <Route element={<InventoryListAdmin/>} path='admin/inventory'/>
-        <Route element={<InventoryVerification/>} path='admin/inventory/check'/>
+        <Route element={<UserManagement/>} path='/admin/user/managment'/>
+        <Route element={<Dashboard/>} path='/admin/dashboard'/>
+        <Route element={<RequestsList/>} path='/admin/requests'/>
+        <Route element={<ReportsStatistics/>} path='/admin/reports'/>
+        <Route element={<InventoryListAdmin/>} path='/admin/inventory'/>
+        <Route element={<InventoryVerification/>} path='/admin/inventory/check'/>
 
         {/* techs routes */}
-        <Route element={<DashboardTechnician/>} path='tech/dashboard'/>
-        <Route element={<RequestsListTechs/>} path='tech/requests'/>
-        <Route element={<TechnicianPanel/>} path='tech/panel'/>
-        <Route element={<InventoryList/>} path='tech/inventory'/>
-        <Route element={<InventoryVerification/>} path='tech/inventory/check'/>
+        <Route element={<DashboardTechnician/>} path='/tech/dashboard'/>
+        <Route element={<RequestsListTechs/>} path='/tech/requests'/>
+        <Route element={<TechnicianPanel/>} path='/tech/panel'/>
+        <Route element={<InventoryList/>} path='/tech/inventory'/>
+        <Route element={<InventoryVerification/>} path='/tech/inventory/check'/>
         {/* user routes */}
-        <Route element={<DashboardUser/>} path='user/dashboard'/>
-        <Route element={<RequestsListUser/>} path='user/requests'/>
+        <Route element={<DashboardUser/>} path='/user/dashboard'/>
+        <Route element={<RequestsListUser/>} path='/user/requests'/>
 
         <Route element={<Inbox/>} path='inbox'/>
 
         {/* dynamic */}
-        <Route element={<RequestDetails/>} path='request/:id'/>
-        <Route element={<ReportDetail/>} path='reports/:id'/>
-        <Route element={<StatusUpdate/>} path='tech/status-update/:id'/>
+        <Route element={<RequestDetails/>} path='/request/:id'/>
+        <Route element={<ReportDetail/>} path='/reports/:id'/>
+        <Route element={<StatusUpdate/>} path='/tech/status-update/:id'/>
 
         {/* public routes */}
-        <Route element={<LoginPage/>} path='login'/>
-        <Route element={<RegisterPage/>} path='register'/>
+        <Route element={<LoginPage/>} path='/login'/>
+        <Route element={<RegisterPage/>} path='/register'/>
         <Route element={<HomePage/>} path='/'/>
       </Routes>
     </BrowserRouter>
