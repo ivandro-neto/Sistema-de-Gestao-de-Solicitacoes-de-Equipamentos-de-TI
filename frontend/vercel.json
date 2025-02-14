@@ -6,6 +6,10 @@
       "dest": "/assets/$1"
     },
     {
+      "src": "^/public/(.*)$",
+      "dest": "/$1"
+    },
+    {
       "src": "^/(favicon\\.ico|robots\\.txt)$",
       "dest": "/$1"
     },
