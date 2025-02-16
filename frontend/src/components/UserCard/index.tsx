@@ -4,8 +4,14 @@ import { logout } from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../../utils/Model";
 
+ interface UserCard {
+  id?: string;
+  name: string;
+  email: string;
+}
+
 interface UserCardProps {
-  user: User; // defina a interface User adequadamente
+  user: UserCard; // defina a interface User adequadamente
 }
 
 const UserCard = ({user} : UserCardProps) =>{
@@ -17,7 +23,7 @@ const UserCard = ({user} : UserCardProps) =>{
   }
   return(
     <div className={styles.container}>
-      <Expanded image="" accountname={user.name !== null? user.name : user.nome} email={user.email}/>
+      <Expanded image="" accountname={user.name} email={user.email}/>
       <button type="button" title="exit" className={"exit"} onClick={handleLogout}><img src="../../public/icons/exit.svg" alt="sair" /></button>
     </div>
   )

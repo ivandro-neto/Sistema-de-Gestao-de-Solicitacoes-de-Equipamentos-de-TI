@@ -135,7 +135,7 @@ const SideNav: React.FC = () => {
           )}
         </ul>
         <div className={styles.user}>
-          {user && <UserCard user={user} />}
+          {user && <UserCard user={{name : user.name, email : user.email}} />}
         </div>
       </nav>
     </section>
