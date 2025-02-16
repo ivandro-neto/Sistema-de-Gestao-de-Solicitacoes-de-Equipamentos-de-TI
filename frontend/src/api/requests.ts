@@ -72,10 +72,11 @@ export const updateSolicitacaoStatusWithHistory = async (id: string, newStatus: 
 export const deleteSolicitacao = async (id: string) => {
   const response = await axios.patch(`${API_URL_REQUEST}/${id}/status`, { status: "cancelled" });
   const currentRequest = await getSolicitacaoById(id);
+
   await createNotificacao({
     usuarioId: currentRequest.solicitanteId,
     destinatario: "",
-    mensagem: `Sua solicitação foi cancelada.`
+    mensagem: "Sua solicitação foi cancelada."
   });
   return response.data;
 };

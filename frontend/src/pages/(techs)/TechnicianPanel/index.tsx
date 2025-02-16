@@ -5,6 +5,7 @@ import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getAtribuicaoByUserId } from "../../../api/assigns";
 import type { AssignedRequest } from "../../../utils/Model"; // Exemplo de interface AssignedRequest
+import { Loading } from "../../../components/LoadingScreen";
 
 const TechnicianPanel: React.FC = () => {
   const [assignments, setAssignments] = useState<AssignedRequest[]>([]);
@@ -42,7 +43,7 @@ const TechnicianPanel: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando suas atribuições...</div>
+        <Loading/>
       </Layout>
     );
   }

@@ -11,4 +11,10 @@ export const RolesExtended : Record<number, string> = {
   3241 : "Técnico",
   2222 : "Solicitante"
 }
+export const RolesDepartment : Record<number, string> = {
+  4568  : "Administrativo" ,
+  8897 : "Comercial",
+  3241 : "TI",
+  2222 : "---"
+}
 

@@ -22,6 +22,8 @@ import Inbox from './pages/Inbox';
 import ReceiptsPage from './pages/(users)/ReceiptsPage';
 import ManualAssignmentPage from './pages/(admin)/ManualAssignPage';
 import AssignmentsListPage from './pages/(admin)/AssignmentListPage';
+import ReplenishmentOrdersPage from './pages/(admin)/ReplenishmentOrdersPage/ReplenishmentOrdersPage';
+import ProfileSettingsPage from './pages/(default)/ProfilePage';
 
 function App() {
   return (
@@ -36,6 +38,14 @@ function App() {
         <Route element={<ManualAssignmentPage/>} path='/admin/tech/assigns'/>
         <Route element={<AssignmentsListPage/>} path='/admin/assigns'/>
         <Route element={<InventoryVerification/>} path='/admin/inventory/check'/>
+        <Route element={<ReplenishmentOrdersPage/>} path='/admin/replenishment'/>
+        <Route element={<ProfileSettingsPage/>} path='/admin/profile'/>
+
+        {/* Comercial */}
+        <Route element={<ReplenishmentOrdersPage/>} path='/comer/replenishment'/>
+        <Route element={<InventoryListAdmin/>} path='/comer/inventory'/>
+        <Route element={<InventoryVerification/>} path='/comer/inventory/check'/>
+        <Route element={<ProfileSettingsPage/>} path='/comer/profile'/>
 
         {/* techs routes */}
         <Route element={<DashboardTechnician/>} path='/tech/dashboard'/>
@@ -43,10 +53,12 @@ function App() {
         <Route element={<TechnicianPanel/>} path='/tech/panel'/>
         <Route element={<InventoryList/>} path='/tech/inventory'/>
         <Route element={<InventoryVerification/>} path='/tech/inventory/check'/>
+        <Route element={<ProfileSettingsPage/>} path='/tech/profile'/>
         {/* user routes */}
         <Route element={<DashboardUser/>} path='/user/dashboard'/>
         <Route element={<RequestsListUser/>} path='/user/requests'/>
         <Route element={<ReceiptsPage/>} path='/user/reciepts'/>
+        <Route element={<ProfileSettingsPage/>} path='/user/profile'/>
 
         <Route element={<Inbox/>} path='/inbox'/>
 

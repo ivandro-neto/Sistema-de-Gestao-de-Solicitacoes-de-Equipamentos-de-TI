@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getSolicitacoes } from "../../../api/requests";
-import { Request } from "../../../utils/Model"; // Interface atualizada
+import type { Request } from "../../../utils/Model"; // Interface atualizada
 
 const RequestsList: React.FC = () => {
   const [requests, setRequests] = useState<Request[]>([]);

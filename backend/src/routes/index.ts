@@ -9,6 +9,7 @@ import historicoRouter from './historico';
 import relatoriosRouter from './relatorios';
 import dashboardRouter from './dashboard';
 import notificacaoRouter from './notificacoes';
+import replenishmentRouter from './replenishment';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/historico', historicoRouter);
 router.use('/relatorios', relatoriosRouter);
 router.use('/dashboard', dashboardRouter);
 router.use('/notificacoes', notificacaoRouter);
+router.use('/replenishment', replenishmentRouter);
 
 export default router;

@@ -3,6 +3,7 @@ import Layout from "../../Layout";
 import styles from "./css/style.module.css";
 import { getComponentes, updateComponente } from "../../../api/components";
 import { Componente } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const InventoryListAdmin: React.FC = () => {
   const [components, setComponents] = useState<Componente[]>([]);
@@ -59,7 +60,7 @@ const InventoryListAdmin: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando estoque...</div>
+        <Loading/>
       </Layout>
     );
   }

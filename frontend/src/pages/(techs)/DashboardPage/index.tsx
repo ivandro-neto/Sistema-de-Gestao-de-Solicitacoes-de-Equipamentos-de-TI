@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getTotalsAssignments } from "../../../api/dashboard";
+import { Loading } from "../../../components/LoadingScreen";
 
 interface DashboardMetrics {
   total: number;
   pending: number;
   inProgress: number;
   completed: number;
+  cancelled: number;
 }
 
 const DashboardTechnician: React.FC = () => {
@@ -22,6 +24,7 @@ const DashboardTechnician: React.FC = () => {
         pending: data.totalPendings,
         inProgress: data.totalProgress,
         completed: data.totalCompleted,
+        cancelled: data.totalCancelled,
       };
       setMetrics(metricsData);
     };
@@ -32,7 +35,7 @@ const DashboardTechnician: React.FC = () => {
   if (!metrics) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando...</div>
+        <Loading/>
       </Layout>
     );
   }
@@ -57,6 +60,10 @@ const DashboardTechnician: React.FC = () => {
           <div className={styles.card}>
             <h3>Atribuições concluídas</h3>
             <p>{metrics.completed}</p>
+          </div>
+          <div className={styles.card}>
+            <h3>Atribuições canceladas</h3>
+            <p>{metrics.cancelled}</p>
           </div>
         </div>
       </div>

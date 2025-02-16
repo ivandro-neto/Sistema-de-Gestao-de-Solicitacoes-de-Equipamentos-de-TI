@@ -3,6 +3,7 @@ import Layout from "../Layout";
 import styles from "./css/styles.module.css";
 import NotificationsTable from "../../components/NotificationTable";
 import { getNotificacoes } from "../../api/notifications";
+import { Loading } from "../../components/LoadingScreen";
 
 const InboxPage: React.FC = () => {
   const [notifications, setNotifications] = useState<Array<any>>([]);
@@ -49,10 +50,7 @@ const InboxPage: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.page}>
-          <h1 className={styles.title}>Notificações</h1>
-          <p>Loading notifications...</p>
-        </div>
+        <Loading/>
       </Layout>
     );
   }

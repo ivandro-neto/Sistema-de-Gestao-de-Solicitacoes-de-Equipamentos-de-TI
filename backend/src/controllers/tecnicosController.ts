@@ -27,6 +27,19 @@ export const getTecnicoById = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ error: 'Erro ao buscar técnico' });
   }
 };
+export const getTecnicoByEmail = async (req: Request, res: Response): Promise<void> => {
+  const { email } = req.body;
+  try {
+    const tecnico = await prisma.tecnico.findFirst({
+      include: { usuario: true },
+      where: { usuario : {email} },
+    });
+    if (tecnico) res.json(tecnico);
+    else res.status(404).json({ error: 'Técnico não encontrado' });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar técnico' });
+  }
+};
 
 export const createTecnico = async (req: Request, res: Response): Promise<void> => {
   const { usuarioId, especialidade, status } = req.body;

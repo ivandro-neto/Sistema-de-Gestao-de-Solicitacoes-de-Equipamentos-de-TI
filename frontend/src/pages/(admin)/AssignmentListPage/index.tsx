@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import styles from "./css/styles.module.css";
 import { getAtribuicoes, deleteAtribuicao } from "../../../api/assigns";
+import { Loading } from "../../../components/LoadingScreen";
 
 const AssignmentsListPage: React.FC = () => {
   const [assignments, setAssignments] = useState<any[]>([]);
@@ -37,7 +38,7 @@ const AssignmentsListPage: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando atribuições...</div>
+        <Loading/>
       </Layout>
     );
   }

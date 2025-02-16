@@ -57,8 +57,32 @@ export const getUsuarioById = async (req: Request, res: Response): Promise<void>
   }
 };
 
+export const getUsuarioByEmail = async (req: Request, res: Response): Promise<void> => {
+  const { email } = req.body;
+  try {
+    const usuario = await prisma.usuario.findUnique({include : {tecnico : true}, where: {email} });
+    if (!usuario)
+      res.status(404).json({ error: 'Usuário não encontrado' });
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar usuário' });
+  }
+};
+
+export const getUsuarioByTechId = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  try {
+    const usuario = await prisma.usuario.findFirst({ where: { tecnico : { id } } });
+    if (!usuario)
+      res.status(404).json({ error: 'Usuário não encontrado' });
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar usuário' });
+  }
+};
+
 export const createUsuario = async (req: Request, res: Response): Promise<void> => {
-  const { nome, email, senha, tipo, departamento } = req.body;
+  const { nome, email, senha, tipo, departamento, especialidade } = req.body;
   try {
     const existedUser = await prisma.usuario.findUnique({where : {email}})
     if(existedUser)
@@ -68,10 +92,12 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
       data: { nome, email, senha, tipo, departamento }
     });
     let tecnico = null
+    console.log(newUsuario)
     if(newUsuario.tipo === 3241)
-      tecnico = await prisma.tecnico.create({data : {usuarioId : newUsuario.email, especialidade : 'Hardware', status : "available"}});
+      tecnico = await prisma.tecnico.create({data : {usuarioId : newUsuario.id, especialidade : especialidade, status : "available"}});
+    console.log(tecnico)
     //@ts-ignore
-   return res.status(201).json(newUsuario, tecnico);
+    return res.status(201).json(newUsuario, tecnico);
   } catch (error) {
     //@ts-ignore
     return res.status(500).json({ error: 'Erro ao criar usuário'+ error });
@@ -87,7 +113,22 @@ export const updateUsuario = async (req: Request, res: Response): Promise<void> 
       data: { nome, email, senha, tipo, departamento }
     });
     //@ts-ignore
-    return res.json(updatedUsuario);
+    return res.status(200).json(updatedUsuario);
+  } catch (error) {
+    //@ts-ignore
+    return res.status(500).json({ error: 'Erro ao atualizar usuário' });
+  }
+};
+export const updatePasswordUsuario = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const {senha} = req.body;
+  try {
+    const updatedUsuario = await prisma.usuario.update({
+      where: { id},
+      data: {senha}
+    });
+    //@ts-ignore
+    return res.status(201).json(updatedUsuario);
   } catch (error) {
     //@ts-ignore
     return res.status(500).json({ error: 'Erro ao atualizar usuário' });

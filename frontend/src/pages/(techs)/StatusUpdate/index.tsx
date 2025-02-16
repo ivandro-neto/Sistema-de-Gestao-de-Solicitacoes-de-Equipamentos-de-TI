@@ -5,6 +5,7 @@ import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getSolicitacaoById, updateSolicitacaoStatus } from "../../../api/requests";
 import type { Request } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const StatusUpdate: React.FC = () => {
   const { id } = useParams<{id : string}>();
@@ -44,7 +45,7 @@ const StatusUpdate: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando detalhes...</div>
+        <Loading/>
       </Layout>
     );
   }

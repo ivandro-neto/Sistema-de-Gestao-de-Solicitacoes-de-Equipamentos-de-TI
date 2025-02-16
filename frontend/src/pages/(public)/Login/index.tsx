@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
       if (Roles["user"] === session.type) {
         navigate("/user/dashboard");
       } else if (Roles["comer"] === session.type) {
-        navigate("/comercial");
+        navigate("/comer/replenishment");
       } else if (Roles["tech"] === session.type) {
         navigate("/tech/dashboard");
       } else if (Roles["admin"] === session.type) {

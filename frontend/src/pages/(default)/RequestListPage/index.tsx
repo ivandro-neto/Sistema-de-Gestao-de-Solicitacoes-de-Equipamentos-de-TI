@@ -3,6 +3,7 @@ import styles from "./css/style.module.css";
 import Layout from "../../Layout";
 import { getSolicitacoes } from "../../../api/requests";
 import { Request } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const RequestsList: React.FC = () => {
   const [requests, setRequests] = useState<Request[]>([]);
@@ -27,7 +28,7 @@ const RequestsList: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando solicitações...</div>
+        <Loading/>
       </Layout>
     );
   }

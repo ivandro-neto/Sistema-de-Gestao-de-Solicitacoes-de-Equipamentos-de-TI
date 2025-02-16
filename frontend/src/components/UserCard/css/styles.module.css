@@ -16,11 +16,11 @@
   height: 2rem;
   border-radius: 50px;
   transition: background-color 300ms;
-  background-color: #be0c0c;
+  background-color: #dd2626;
 }
 
 .exit:hover{
-  background-color: #be0c0c;
+  background-color: #dd2626;
 }
 
 .exit:hover img{

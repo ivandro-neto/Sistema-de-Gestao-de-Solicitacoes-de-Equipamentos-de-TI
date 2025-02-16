@@ -6,10 +6,8 @@ import { register } from "../../../api/user";
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [departamento, setDepartamento] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -25,7 +23,7 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const user = await register(username, email, password, departamento, role);
+      const user = await register(username, email, password, '---', "user");
       if (user) {
         setSuccess("Registration successful.");
         navigate("/login");
@@ -90,32 +88,7 @@ const RegisterPage: React.FC = () => {
               required
             />
           </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Departamento</label>
-            <input
-              type="text"
-              placeholder="Seu Departamento"
-              value={departamento}
-              onChange={(e) => setDepartamento(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Selecione seu Cargo</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className={styles.input}
-              required
-            >
-              <option value="">Selecione um cargo</option>
-              <option value="user">Usuário</option>
-              <option value="admin">Administrador</option>
-              <option value="comer">Comercial</option>
-              <option value="tech">Técnico</option>
-            </select>
-          </div>
+          
           <button type="submit" className={styles.button}>
             Registrar
           </button>

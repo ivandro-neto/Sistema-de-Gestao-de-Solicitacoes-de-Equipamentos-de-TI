@@ -4,6 +4,7 @@ import Layout from "../../Layout";
 import styles from "./css/style.module.css";
 import { getComponentes } from "../../../api/components";
 import { Componente } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const InventoryList: React.FC = () => {
   const [components, setComponents] = useState<Componente[]>([]);
@@ -27,7 +28,7 @@ const InventoryList: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando estoque...</div>
+        <Loading/>
       </Layout>
     );
   }

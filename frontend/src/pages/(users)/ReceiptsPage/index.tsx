@@ -4,6 +4,8 @@ import styles from "./css/styles.module.css";
 import { getSolicitacoes } from "../../../api/requests";
 import type { Request } from "../../../utils/Model";
 import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+import { Loading } from "../../../components/LoadingScreen";
 
 const ReceiptsPage: React.FC = () => {
   const [requests, setRequests] = useState<Request[]>([]);
@@ -31,21 +33,50 @@ const ReceiptsPage: React.FC = () => {
 
   const generateReceiptPDF = (request: Request) => {
     const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("Comprovante de Entrega", 14, 22);
-    doc.setFontSize(12);
-    doc.text(`ID da Solicitação: ${request.id}`, 14, 35);
-    doc.text(`Data de Criação: ${new Date(request.createdAt).toLocaleDateString()}`, 14, 45);
-    doc.text(`Descrição: ${request.descricao}`, 14, 55);
-    doc.text(`Status: ${request.status}`, 14, 65);
-    doc.text("Obrigado por utilizar o TechEquip Request!", 14, 85);
+
+    // Cabeçalho
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(52, 152, 219);
+    doc.text("Comprovante de Entrega", 14, 20);
+
+    // Linha separadora
+    doc.setDrawColor(52, 152, 219);
+    doc.setLineWidth(0.5);
+    doc.line(14, 24, 196, 24);
+
+    // Dados organizados em uma tabela
+    const tableHead = [["Campo", "Valor"]];
+    const tableBody = [
+      ["ID da Solicitação", request.id],
+      ["Data de Criação", new Date(request.createdAt).toLocaleDateString()],
+      ["Descrição", request.descricao],
+      ["Status", request.status],
+    ];
+
+    // @ts-ignore
+    doc.autoTable({
+      head: tableHead,
+      body: tableBody,
+      startY: 30,
+      theme: "grid",
+      headStyles: { fillColor: [52, 152, 219], textColor: 255 },
+      styles: { fontSize: 12 }
+    });
+
+    // Rodapé
+    doc.setFontSize(10);
+    // @ts-ignore
+    const finalY = doc.lastAutoTable.finalY || 280;
+    doc.text("Obrigado por utilizar o TechEquip Request!", 14, finalY + 10);
+
     doc.save(`comprovante_${request.id}.pdf`);
   };
 
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando comprovantes...</div>
+        <Loading/>
       </Layout>
     );
   }

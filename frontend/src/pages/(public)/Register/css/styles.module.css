@@ -1,15 +1,4 @@
-:root {
-  --primary-color: #3498db;
-  --secondary-color: #2ecc71;
-  --text-color: #333;
-  --bg-color: #f9f9f9;
-  --white: #fff;
-  --border-radius: 8px;
-  --transition-speed: 0.3s;
-  --error-color: #e74c3c;
-  --success-color: #2ecc71;
-  --font-family: "poppins", sans-serif;
-}
+
 
 /* Container Geral */
 .pageContainer {
@@ -17,7 +6,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background-color : var(--primary-color);
   padding: 20px;
   font-family: var(--font-family);
 }

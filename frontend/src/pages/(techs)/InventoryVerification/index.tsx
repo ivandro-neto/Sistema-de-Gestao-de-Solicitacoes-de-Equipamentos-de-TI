@@ -3,6 +3,7 @@ import Layout from "../../Layout";
 import styles from "./css/style.module.css";
 import { getEquipamentoById, getEquipamentos } from "../../../api/equipaments";
 import type { Equipamento } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const InventoryVerification: React.FC = () => {
   const [equipmentId, setEquipmentId] = useState<string>("");
@@ -28,7 +29,7 @@ const InventoryVerification: React.FC = () => {
     };
     fetchEquipments();
   }, []);
-
+  
   const handleVerify = async () => {
     if (!equipmentId) return;
     setLoading(true);
@@ -43,6 +44,7 @@ const InventoryVerification: React.FC = () => {
       setLoading(false);
     }
   };
+  if(loading || loadingEquipments) return <Layout><Loading/></Layout>
 
   return (
     <Layout>
@@ -70,7 +72,6 @@ const InventoryVerification: React.FC = () => {
             Verificar
           </button>
         </div>
-        {loading && <p className={styles.loading}>Carregando informações...</p>}
         {error && <p className={styles.error}>{error}</p>}
         {equipment && (
           <div className={styles.equipmentDetails}>

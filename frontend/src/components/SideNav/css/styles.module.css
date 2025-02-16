@@ -4,14 +4,16 @@
   padding: 1rem;
   width: 28%;
   gap: 1rem;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #273043;
+  background-color: #273043;
+  color: white;
 }
 .navbar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #273043;
   width: 100%;
   position: sticky;
 }
@@ -19,10 +21,19 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
 }
 
 .appName h1{
   font-size: 1rem;
+  color: white;
+}
+
+.appName img{
+  width: 32px;
+  filter: invert();
 }
 .list {
   list-style: none;

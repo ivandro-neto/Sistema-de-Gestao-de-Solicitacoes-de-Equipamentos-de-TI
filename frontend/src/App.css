@@ -43,12 +43,12 @@
 
 /* Variáveis Globais */
 :root {
-  --primary-color: #3498db;
-  --secondary-color: #2ecc71;
-  --error-color: #e74c3c;
-  --text-color: #333;
+  --primary-color: #212D40;
+  --secondary-color: #2980b9;
+  --error-color: #E85E5E;
+  --text-color: #11151C;
   --background-color: #ffffff;
-  --font-family: 'Arial', sans-serif;
+  --font-family: 'Poppins', sans-serif;
   --border-radius: 4px;
   --transition-speed: 0.3s;
 }
@@ -262,7 +262,7 @@ table tbody tr:hover {
 }
 
 .exit:hover{
-  background-color: #be0c0c;
+  background-color: #E85E5E;
 }
 
 .exit:hover img{

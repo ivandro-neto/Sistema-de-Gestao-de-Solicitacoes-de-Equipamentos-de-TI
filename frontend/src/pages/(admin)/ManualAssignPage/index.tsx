@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/styles.module.css";
 import { createAtribuicao } from "../../../api/assigns";
+import { getTechUserByEmail } from "../../../api/user";
+import Layout from "../../Layout";
 
 const ManualAssignmentPage: React.FC = () => {
   const [solicitacaoId, setSolicitacaoId] = useState("");
-  const [tecnicoId, setTecnicoId] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -15,7 +17,8 @@ const ManualAssignmentPage: React.FC = () => {
     setError(null);
     setSuccess(null);
     try {
-      const result = await createAtribuicao({ solicitacaoId, tecnicoId });
+      const techID = await getTechUserByEmail(email);
+      const result = await createAtribuicao({ solicitacaoId, techID });
       if (result) {
         setSuccess("Atribuição criada com sucesso!");
       }
@@ -26,6 +29,8 @@ const ManualAssignmentPage: React.FC = () => {
   };
 
   return (
+    <Layout>
+
     <div className={styles.container}>
       <h2>Atribuição Manual</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -41,15 +46,15 @@ const ManualAssignmentPage: React.FC = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="tecnicoId">ID do Técnico:</label>
+          <label htmlFor="tecnicoId">E-mail do Técnico:</label>
           <input
-            type="text"
+            type="email"
             id="tecnicoId"
-            value={tecnicoId}
-            onChange={(e) => setTecnicoId(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
             required
-          />
+            />
         </div>
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
@@ -61,6 +66,7 @@ const ManualAssignmentPage: React.FC = () => {
         Ver todas as atribuições
       </button>
     </div>
+  </Layout>
   );
 };
 

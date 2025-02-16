@@ -4,6 +4,7 @@ import styles from "./css/style.module.css";
 import { getRelatorios } from "../../../api/reports";
 import { Report } from "../../../utils/Model";
 import { Link } from "react-router-dom";
+import { Loading } from "../../../components/LoadingScreen";
 
 const ReportsList: React.FC = () => {
   const [reports, setReports] = useState<Report[]>([]);
@@ -27,7 +28,7 @@ const ReportsList: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando relatórios...</div>
+        <Loading/>
       </Layout>
     );
   }

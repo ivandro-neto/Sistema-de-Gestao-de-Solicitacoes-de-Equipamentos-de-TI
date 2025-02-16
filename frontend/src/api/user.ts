@@ -20,7 +20,7 @@ export const login = async (email : string, senha : string) => {
   }
 }
 
-export const register = async (nome : string, email : string, senha : string, departamento : string, tipo : string) => {
+export const register = async (nome : string, email : string, senha : string, departamento : string, tipo : string, especialidade : string) => {
   try{
     if (!Roles[tipo]) {
       throw new Error(`Invalid role: ${tipo}`);
@@ -34,7 +34,8 @@ export const register = async (nome : string, email : string, senha : string, de
         email,
         senha,
         tipo : Roles[tipo],
-        departamento
+        departamento,
+        especialidade
       }
     })
     return user.data
@@ -59,6 +60,43 @@ export const getUsers = async () =>{
     console.log(error)
   }
 }
+export const getTechUserByEmail = async (email : string) =>{
+  try {
+    const users = await axios({
+      method : "post",
+      url: `${API_URL_USER}/`,
+      data : email
+    })
+    if(users.data.tecnico)
+      return users.data.tecnico.id
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const getUserByTechId = async (id : string) =>{
+  try {
+    const users = await axios({
+      method : "get",
+      url: `${API_URL_USER}/tech/${id}`
+    })
+    
+    return users.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const getUserById = async (id : string) =>{
+  try {
+    const users = await axios({
+      method : "get",
+      url: `${API_URL_USER}/${id}`
+    })
+    
+    return users.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const deleteUser = async (id: string) =>{
   try {
@@ -68,6 +106,32 @@ export const deleteUser = async (id: string) =>{
       url : `${API_URL_USER}/${id}`,
     })
 
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const updatePasswordUser = async (id: string, data: any) =>{
+  try {
+    
+    await axios({
+      method : "patch",
+      url : `${API_URL_USER}/${id}`,
+      data
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const updateUser = async (id: string, data: any) =>{
+  try {
+    
+   const updatedUser = await axios({
+      method : "put",
+      url : `${API_URL_USER}/${id}`,
+      data
+    })
+    return updatedUser.data
   } catch (error) {
     console.log(error)
   }

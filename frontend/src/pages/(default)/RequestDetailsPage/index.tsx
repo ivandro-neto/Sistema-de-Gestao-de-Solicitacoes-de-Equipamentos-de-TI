@@ -6,6 +6,7 @@ import Layout from "../../Layout";
 import { getSolicitacaoById } from "../../../api/requests";
 import { getHistoricos } from "../../../api/histories";
 import type { RequestDetailsType } from "../../../utils/Model";
+import { Loading } from "../../../components/LoadingScreen";
 
 const RequestDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,7 +20,12 @@ const RequestDetails: React.FC = () => {
       try {
       //@ts-ignore
         const reqData = await getSolicitacaoById(id!);
-        setRequest(reqData);
+        const req = reqData
+        req.usuario = reqData.usuario?.nome
+        req.techId= reqData.atribuicoes?.tecnicoId? reqData.atribuicoes?.tecnicoId : "" 
+        
+       
+        setRequest(req);
         
         const allHist = await getHistoricos();
         // Converte ambos os valores para string para garantir a comparação
@@ -42,7 +48,7 @@ const RequestDetails: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando detalhes da solicitação...</div>
+        <Loading/>
       </Layout>
     );
   }
@@ -69,12 +75,13 @@ const RequestDetails: React.FC = () => {
         <h2 className={styles.title}>Detalhes da Solicitação</h2>
         <div className={styles.details}>
           <p><strong>ID:</strong> {request.id}</p>
+          <p><strong>Solicitante:</strong> {request.usuario}</p>
           <p><strong>Status:</strong> {request.status}</p>
           <p>
             <strong>Data:</strong> {new Date(request.createdAt).toLocaleDateString()}
           </p>
           <p><strong>Descrição:</strong> {request.descricao}</p>
-          <p><strong>Tecnico ID:</strong> {request.techId}</p>
+          <p><strong>Tecnico ID:</strong> {request.techId ? request.techId : "Aguardando atendimento..."}</p>
         </div>
      
         <div className={styles.history}>

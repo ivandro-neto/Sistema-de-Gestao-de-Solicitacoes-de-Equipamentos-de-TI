@@ -19,34 +19,67 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { Loading } from "../../../components/LoadingScreen";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
 const ReportsStatistics: React.FC = () => {
-  //@ts-ignore
   const [performanceData, setPerformanceData] = useState<any>(null);
-  //@ts-ignore
   const [inventoryData, setInventoryData] = useState<any>(null);
-  //@ts-ignore
   const [requestsData, setRequestsData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  //@ts-ignore
-  const [genMessage, setGenMessage] = useState<string>("");
 
+  // Função para gerar PDF com tabela
+  const generatePDFTable = (title: string, content: string, filename: string) => {
+    const doc = new jsPDF();
 
+    // Cabeçalho do PDF
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(52, 152, 219);
+    doc.text(title, 14, 20);
+
+    // Linha separadora
+    doc.setDrawColor(52, 152, 219);
+    doc.setLineWidth(0.5);
+    doc.line(14, 24, 196, 24);
+
+    // Data
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Data: ${new Date().toLocaleDateString()}`, 14, 32);
+
+    // Transforma o conteúdo em linhas para a tabela
+    const rows = content.split("\n").map((line) => [line]);
+
+    // Gera a tabela
+    doc.autoTable({
+      head: [["Detalhes"]],
+      body: rows,
+      startY: 40,
+      theme: "grid",
+      headStyles: { fillColor: [52, 152, 219], textColor: 255 },
+      styles: { fontSize: 12 },
+    });
+
+    // Rodapé
+    doc.setFontSize(10);
+    const finalY = doc.lastAutoTable.finalY || 280;
+    doc.text("TechEquip Request - Relatório Gerado Automaticamente", 14, finalY + 10);
+
+    doc.save(filename);
+  };
 
   const fetchMetrics = async () => {
     try {
-      // Agora chamamos as funções de métricas reais
       const perf = await getPerformanceMetrics();
       const inv = await getInventoryMetrics();
       const reqs = await getRequestsMetrics();
-      console.log("Performance metrics:", perf);
-      console.log("Inventory metrics:", inv);
-      console.log("Requests metrics:", reqs);
+
       setPerformanceData({
-        labels: perf.labels, // Ex: ["Técnico A", "Técnico B", "Técnico C"]
+        labels: perf.labels,
         datasets: [
           {
             label: "Concluídas",
@@ -67,7 +100,7 @@ const ReportsStatistics: React.FC = () => {
       });
 
       setInventoryData({
-        labels: inv.labels, // Ex: ["RAM", "SSD", "Processador", "Placa Mãe", "Fonte"]
+        labels: inv.labels,
         datasets: [
           {
             label: "Qtd. Disponível",
@@ -84,7 +117,7 @@ const ReportsStatistics: React.FC = () => {
       });
 
       setRequestsData({
-        labels: reqs.labels, // Ex: ["Pendentes", "Em Progresso", "Concluídas", "Canceladas"]
+        labels: reqs.labels,
         datasets: [
           {
             label: "Solicitações",
@@ -107,7 +140,7 @@ const ReportsStatistics: React.FC = () => {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        await Promise.all([ fetchMetrics()]);
+        await fetchMetrics();
       } catch (err) {
         console.error(err);
       } finally {
@@ -117,70 +150,50 @@ const ReportsStatistics: React.FC = () => {
     fetchAll();
   }, []);
 
-
-  
-
-  const generatePDF = (title: string, content: string, filename: string) => {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text(title, 14, 22);
-    doc.setFontSize(12);
-    doc.text(`Data: ${new Date().toLocaleDateString()}`, 14, 30);
-    const lines = doc.splitTextToSize(content, 180);
-    doc.text(lines, 14, 40);
-    doc.save(filename);
-  };
-
   const handleGeneratePerformance = async () => {
     try {
-      setGenMessage("Gerando relatório de desempenho dos técnicos em PDF...");
       const relatorio = await generateRelatorioDesempenhoTecnicos();
-      generatePDF(
+      // Supondo que relatorio.conteudo seja uma string com quebras de linha
+      generatePDFTable(
         "Relatório de Desempenho dos Técnicos",
         relatorio.conteudo,
         "Relatorio_Desempenho_Tecnicos.pdf"
       );
-      setGenMessage("Relatório de desempenho gerado com sucesso.");
     } catch (err) {
-      setGenMessage("Erro ao gerar relatório de desempenho.");
+      console.error("Erro ao gerar relatório de desempenho", err);
     }
   };
 
   const handleGenerateInventory = async () => {
     try {
-      setGenMessage("Gerando relatório de estoque de componentes em PDF...");
       const relatorio = await generateRelatorioEstoqueComponentes();
-      generatePDF(
+      generatePDFTable(
         "Relatório de Estoque de Componentes",
         relatorio.conteudo,
         "Relatorio_Estoque_Componentes.pdf"
       );
-      setGenMessage("Relatório de estoque gerado com sucesso.");
     } catch (err) {
-      setGenMessage("Erro ao gerar relatório de estoque.");
+      console.error("Erro ao gerar relatório de estoque", err);
     }
   };
 
   const handleGenerateRequests = async () => {
     try {
-      setGenMessage("Gerando relatório de solicitações em PDF...");
       const relatorio = await generateRelatorioSolicitacoes();
-      generatePDF(
+      generatePDFTable(
         "Relatório de Solicitações",
         relatorio.conteudo,
         "Relatorio_Solicitacoes.pdf"
       );
-      setGenMessage("Relatório de solicitações gerado com sucesso.");
-      
     } catch (err) {
-      setGenMessage("Erro ao gerar relatório de solicitações.");
+      console.error("Erro ao gerar relatório de solicitações", err);
     }
   };
 
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando relatórios e métricas...</div>
+        <Loading/>
       </Layout>
     );
   }

@@ -1,7 +1,8 @@
 export interface User {
   id?: string;
-  name: string;
+  nome: string;
   email: string;
+  senha: string;
   tipo: number;
   departamento : string
 }
@@ -12,7 +13,6 @@ export interface Request {
   id?: string;
   solicitanteId: string;
   equipamentoId: string;
-  techId: string;
   descricao: string;
   status: string;
   createdAt: string;
@@ -20,9 +20,12 @@ export interface Request {
 }
 
 
+
 // Interface para os detalhes de uma solicitação (campos adicionais)
 export interface RequestDetailsType extends Request {
   description: string; // Descrição completa da solicitação
+  techId : string
+  usuario : string;
   // Adicione aqui outros campos que sejam retornados pela API, por exemplo:
   // solicitante: { id: number; name: string; email: string };
   // equipamentoId: number;

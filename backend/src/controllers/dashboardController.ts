@@ -9,7 +9,8 @@ export const getTotalsRequests = async (req: Request, res: Response): Promise<vo
     const totalPendings = await prisma.solicitation.count({where : {status : "pending"}});
     const totalProgress = await prisma.solicitation.count({where : {status : "progress"}});
     const totalCompleted = await prisma.solicitation.count({where : {status : "completed"}});
-    res.json({totalRequests, totalPendings , totalProgress, totalCompleted});
+    const totalCancelled = await prisma.solicitation.count({where : {status : "cancelled"}});
+    res.json({totalRequests, totalPendings , totalProgress, totalCompleted, totalCancelled});
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar dados' });
   }
@@ -22,7 +23,8 @@ export const getTotalsRequestsByUserId = async (req: Request, res: Response): Pr
     const totalPendings = await prisma.solicitation.count({where : {status : "pending", solicitanteId : id}});
     const totalProgress = await prisma.solicitation.count({where : {status : "progress", solicitanteId : id}});
     const totalCompleted = await prisma.solicitation.count({where : {status : "completed", solicitanteId : id}});
-    res.json({totalRequests, totalPendings , totalProgress, totalCompleted});
+    const totalCancelled = await prisma.solicitation.count({where : {status : "cancelled", solicitanteId : id}});
+    res.json({totalRequests, totalPendings , totalProgress, totalCompleted, totalCancelled});
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar solicitacoes' });
   }
@@ -35,8 +37,9 @@ export const getTotalsAssignedByUserId = async (req: Request, res: Response): Pr
     const totalPendings = await prisma.atribuicaoTecnico.count({where : {tecnico : {usuarioId : id}, solicitacao : {status : "pending" }}});
     const totalProgress = await prisma.atribuicaoTecnico.count({where : {tecnico : {usuarioId : id}, solicitacao : {status : "progress" }}});
     const totalCompleted = await prisma.atribuicaoTecnico.count({where : {tecnico : {usuarioId : id}, solicitacao : {status : "completed" }}});
+    const totalCancelled = await prisma.atribuicaoTecnico.count({where : {tecnico : {usuarioId : id}, solicitacao : {status : "cancelled" }}});
   
-    res.json({totalAssigned, totalPendings , totalProgress, totalCompleted});
+    res.json({totalAssigned, totalPendings , totalProgress, totalCompleted, totalCancelled});
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar atribuição' });
   }

@@ -11,6 +11,7 @@ import {
 } from "../../../api/requests";
 import type { Request } from "../../../utils/Model"; // Interface Request: { id, descricao, status, date, equipamentoId }
 import CreateModal from "../../../components/Modals/CreateModal";
+import { Loading } from "../../../components/LoadingScreen";
 
 const RequestsListUser: React.FC = () => {
   const [requests, setRequests] = useState<Request[]>([]);
@@ -114,7 +115,7 @@ const RequestsListUser: React.FC = () => {
   if (loading) {
     return (
       <Layout>
-        <div className={styles.loading}>Carregando solicitações...</div>
+        <Loading/>
       </Layout>
     );
   }
@@ -132,6 +133,18 @@ const RequestsListUser: React.FC = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>Minhas Solicitações</h2>
         <button type="button" onClick={openCreateModal} className={styles.createButton}>Criar Solicitação</button>
+        
+        {showCreateModal && (
+          <CreateModal onClose={closeCreateModal} onCreate={handleCreate} />
+        )}
+
+        {showUpdateModal && currentRequest && (
+          <UpdateModal request={currentRequest} onClose={closeUpdateModal} onUpdate={handleUpdate} />
+        )}
+
+        {showDeleteModal && currentRequest && (
+          <DeleteModal request={currentRequest} onClose={closeDeleteModal} onDelete={handleDelete} />
+        )}
         {requests.length === 0 ? (
           <p className={styles.noData}>Nenhuma solicitação encontrada.</p>
         ) : (
@@ -152,10 +165,10 @@ const RequestsListUser: React.FC = () => {
                   <td>{req.descricao}</td>
                   <td>{req.status}</td>
                   <td>{new Date(req.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td className="actions" width={"30%"}>
                     <a href={`/request/${req.id}`} className={styles.detailLink}>Ver Detalhes</a>
-                    <button type ="button" onClick={() => openUpdateModal(req)} className={styles.updateButton}>Atualizar</button>
-                    <button type="button" onClick={() => openDeleteModal(req)} className={styles.deleteButton}>Cancelar </button>
+                    <button type ="button" onClick={() => openUpdateModal(req)} className={styles.btn}>Atualizar</button>
+                    <button type="button" onClick={() => openDeleteModal(req)} className={styles.btn}>Cancelar </button>
                   </td>
                 </tr>
               ))}
@@ -163,17 +176,6 @@ const RequestsListUser: React.FC = () => {
           </table>
         )}
 
-        {showCreateModal && (
-          <CreateModal onClose={closeCreateModal} onCreate={handleCreate} />
-        )}
-
-        {showUpdateModal && currentRequest && (
-          <UpdateModal request={currentRequest} onClose={closeUpdateModal} onUpdate={handleUpdate} />
-        )}
-
-        {showDeleteModal && currentRequest && (
-          <DeleteModal request={currentRequest} onClose={closeDeleteModal} onDelete={handleDelete} />
-        )}
       </div>
     </Layout>
   );
@@ -199,7 +201,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ request, onClose, onUpdate })
 
   return (
     <div className={styles.modalOverlay}>
-      <div className={"modal"}>
+      <div className={styles.modal}>
         <h3>Atualizar Solicitação</h3>
         <form onSubmit={handleSubmit}>
           <textarea
@@ -239,7 +241,7 @@ interface DeleteModalProps {
 const DeleteModal: React.FC<DeleteModalProps> = ({ request, onClose, onDelete }) => {
   return (
     <div className={styles.modalOverlay}>
-      <div className={"modal"}>
+      <div className={styles.modal}>
         <h3>Excluir Solicitação</h3>
         <p>
           Tem certeza que deseja excluir a solicitação com descrição <strong>{request.descricao}</strong>?

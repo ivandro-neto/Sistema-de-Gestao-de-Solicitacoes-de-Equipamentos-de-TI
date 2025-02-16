@@ -168,7 +168,7 @@ export const getSolicitacaoById = async (req: Request, res: Response): Promise<v
     
     const solicitacao = await prisma.solicitation.findUnique({
       where: { id },
-      include: { usuario: true }
+      include: { usuario: true, atribuicoes: true }
     });
     if (solicitacao) res.json(solicitacao);
     else res.status(404).json({ error: 'Solicitação não encontrada.' });
@@ -181,9 +181,9 @@ export const getSolicitacaoByUserId = async (req: Request, res: Response): Promi
   try {
     const solicitacao = await prisma.solicitation.findMany({
       where: { solicitanteId: id },
-      include: { usuario: {include : {tecnico : true}} }
+      include: { usuario: true, atribuicoes : true }
     });
-    if (solicitacao) res.json(solicitacao);
+    if (solicitacao) res.status(200).json(solicitacao);
     else res.status(404).json({ error: 'Solicitação não encontrada.' });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar solicitação.' });
