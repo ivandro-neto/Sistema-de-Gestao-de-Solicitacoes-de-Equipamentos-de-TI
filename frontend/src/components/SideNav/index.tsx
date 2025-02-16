@@ -25,7 +25,7 @@ const SideNav: React.FC = () => {
   return (
     <section className={styles.container}>
       <div className={styles.appName}>
-        <img src="/icons/laptop-medical-solid.svg" alt="Logo" loading="lazy" />
+        <img src="../../public/icons/laptop-medical-solid.svg" alt="Logo" loading="lazy" />
         <h1>TechEquip Request</h1>
       </div>
       <nav className={styles.navbar}>
