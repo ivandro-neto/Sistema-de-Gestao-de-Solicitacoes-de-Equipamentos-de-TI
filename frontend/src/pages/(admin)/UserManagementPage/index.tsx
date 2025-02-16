@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./css/style.module.css";
 import Layout from "../../Layout";
-import { deleteUser, getUsers, register, updatePasswordUser, updateUser } from "../../../api/user";
+import { deleteUser, getUsers, register, updatePasswordUser } from "../../../api/user";
 import type { User } from "../../../utils/Model";
 import { Roles, RolesDepartment, RolesExtended } from "../../../utils/Roles";
 import { Loading } from "../../../components/LoadingScreen";
@@ -44,10 +44,11 @@ export default function UserManagement() {
     const newUser: User = {
       nome : name,
       email,
+      senha : "senha123#",
       tipo : Roles[role],
       departamento: RolesDepartment[Roles[role]]
     };
-    register(newUser.nome, newUser.email,"senha123#", newUser.departamento, role, especialidade)
+    register(newUser.nome, newUser.email,newUser.senha, newUser.departamento, role, especialidade)
     setUsers([...users, newUser]);
     setName("");
     setEmail("");

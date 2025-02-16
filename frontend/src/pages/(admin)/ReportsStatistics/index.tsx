@@ -55,6 +55,7 @@ const ReportsStatistics: React.FC = () => {
     const rows = content.split("\n").map((line) => [line]);
 
     // Gera a tabela
+    //@ts-ignore
     doc.autoTable({
       head: [["Detalhes"]],
       body: rows,
@@ -66,6 +67,7 @@ const ReportsStatistics: React.FC = () => {
 
     // Rodapé
     doc.setFontSize(10);
+    //@ts-ignore
     const finalY = doc.lastAutoTable.finalY || 280;
     doc.text("TechEquip Request - Relatório Gerado Automaticamente", 14, finalY + 10);
 

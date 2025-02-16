@@ -23,7 +23,7 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const user = await register(username, email, password, '---', "user");
+      const user = await register(username, email, password, '---', "user", "");
       if (user) {
         setSuccess("Registration successful.");
         navigate("/login");

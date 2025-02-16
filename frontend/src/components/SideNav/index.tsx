@@ -1,12 +1,10 @@
 import { memo, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { LinkButton } from "../Button";
 import UserCard from "../UserCard";
 import styles from "./css/styles.module.css";
 import { Roles } from "../../utils/Roles";
 
 const SideNav: React.FC = () => {
-  const navigate = useNavigate();
   
   // Inicializa o estado do usuário corretamente
   const [user, setUser] = useState<any>(() => {

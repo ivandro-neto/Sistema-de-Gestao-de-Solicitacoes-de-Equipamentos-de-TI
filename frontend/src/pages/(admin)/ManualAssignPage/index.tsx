@@ -18,7 +18,7 @@ const ManualAssignmentPage: React.FC = () => {
     setSuccess(null);
     try {
       const techID = await getTechUserByEmail(email);
-      const result = await createAtribuicao({ solicitacaoId, techID });
+      const result = await createAtribuicao({ solicitacaoId, tecnicoId: techID });
       if (result) {
         setSuccess("Atribuição criada com sucesso!");
       }
