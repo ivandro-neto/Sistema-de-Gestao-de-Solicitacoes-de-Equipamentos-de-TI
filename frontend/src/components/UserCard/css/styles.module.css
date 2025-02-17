@@ -1,19 +1,19 @@
 .container{
   display: flex;
   width: 100%;
-  padding: .8rem 1rem;
+  padding: .5rem;
   border-radius: 12px;
   border: 1px solid;
-  gap: 1rem;
-  justify-content: space-between;
+  gap: .8rem;
+  justify-content: space-around;
 }
 
 .exit{
   outline: none;
   cursor: pointer;
   border: none;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50px;
   transition: background-color 300ms;
   background-color: #dd2626;
@@ -24,6 +24,8 @@
 }
 
 .exit:hover img{
+  width: 100%;
+  object-fit: fill;
   filter: invert(1);
   animation: shake ease 300ms;
 }

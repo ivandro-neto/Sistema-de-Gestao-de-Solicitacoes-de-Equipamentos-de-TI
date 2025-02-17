@@ -254,8 +254,8 @@ table tbody tr:hover {
   outline: none;
   cursor: pointer;
   border: none;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50px;
   transition: background-color 300ms;
   background-color: #ebebeb;
@@ -266,6 +266,7 @@ table tbody tr:hover {
 }
 
 .exit:hover img{
+  object-fit: fill;
   filter: invert(1);
   animation: shake ease 300ms;
 }
