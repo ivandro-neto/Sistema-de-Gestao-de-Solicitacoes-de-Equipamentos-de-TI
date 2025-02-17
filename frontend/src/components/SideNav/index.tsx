@@ -130,6 +130,11 @@ const SideNav: React.FC = () => {
           )}
           {user && user.type === Roles.user && (
             <li className={styles.items}>
+              <LinkButton url="/user/reciepts" content="Recibos" />
+            </li>
+          )}
+          {user && user.type === Roles.user && (
+            <li className={styles.items}>
               <LinkButton url="/user/profile" content="Perfil" />
             </li>
           )}
