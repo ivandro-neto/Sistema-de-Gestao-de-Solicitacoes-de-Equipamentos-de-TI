@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../Layout";
 import styles from "./css/styles.module.css";
-import { getUserById, login, updateUser } from "../../../api/user";
+import { deleteUser, getUserById, login, logout, updateUser } from "../../../api/user";
 import { Roles } from "../../../utils/Roles";
 
 const ProfileSettingsPage: React.FC = () => {
@@ -79,6 +79,22 @@ const ProfileSettingsPage: React.FC = () => {
     }
   };
   
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+    try {
+      // Atualiza o perfil via API, incluindo senha
+      await deleteUser(session.id)
+      logout();
+      setMessage("Perfil deletado com sucesso.");
+    } catch (error) {
+      console.error(error);
+      setMessage("Erro ao atualizar perfil.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Layout>
@@ -126,6 +142,9 @@ const ProfileSettingsPage: React.FC = () => {
           </div>
           <button type="submit" className={styles.button} disabled={loading}>
             {loading ? "Salvando..." : "Salvar Alterações"}
+          </button>
+          <button type="submit" className={`${styles.button} ${styles.red}`} disabled={loading}>
+            {loading ? "Deletando a conta..." : "Deletar conta"}
           </button>
           {message && <p className={styles.message}>{message}</p>}
         </form>

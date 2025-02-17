@@ -62,6 +62,13 @@
   background-color: #2980b9;
 }
 
+.red{
+  background-color: var(--error-color);
+}
+.red{
+  background-color: #f87777;
+}
+
 .message {
   font-size: 14px;
   margin-top: 10px;
