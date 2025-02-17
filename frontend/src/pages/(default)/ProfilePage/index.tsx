@@ -143,7 +143,7 @@ const ProfileSettingsPage: React.FC = () => {
           <button type="submit" className={styles.button} disabled={loading}>
             {loading ? "Salvando..." : "Salvar Alterações"}
           </button>
-          <button type="submit" className={`${styles.button} ${styles.red}`} disabled={loading}>
+          <button type="button" className={`${styles.button} ${styles.red}`} onClick={handleDelete} disabled={loading}>
             {loading ? "Deletando a conta..." : "Deletar conta"}
           </button>
           {message && <p className={styles.message}>{message}</p>}
