@@ -47,7 +47,7 @@ export const updateSolicitacao = async (id: string, data: { descricao?: string; 
     mensagem: `Sua solicitação foi atualizada para o status "${updatedRequest.status}".`
   });
   await createNotificacao({
-    usuarioId: updatedRequest.atribuicoes.tecnicoId,
+    usuarioId: updatedRequest.atribuicoes[0].tecnicoId,
     destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `A solicitação ${updatedRequest.id} foi atualizada para o status "${updatedRequest.status}".`
   });
@@ -63,7 +63,7 @@ export const updateSolicitacaoStatus = async (id: string, status: string) => {
     mensagem: `Sua solicitação foi atualizada para o status "${response.data.status}".`
   });
   await createNotificacao({
-    usuarioId: response.data.atribuicoes.tecnicoId,
+    usuarioId: response.data.atribuicoes[0].tecnicoId,
     destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `A solicitação ${response.data.id} foi atualizada para o status "${response.data.status}".`
   });
@@ -107,7 +107,7 @@ export const deleteSolicitacao = async (id: string) => {
   });
   
   await createNotificacao({
-    usuarioId: currentRequest.atribuicoes.tecnicoId,
+    usuarioId: currentRequest.atribuicoes[0].tecnicoId,
     destinatario: "",
     mensagem: `A solicitação ${currentRequest.id} foi cancelada.`
   });
