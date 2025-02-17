@@ -8,6 +8,10 @@ import "jspdf-autotable";
 import { Loading } from "../../../components/LoadingScreen";
 
 const ReceiptsPage: React.FC = () => {
+  const [user, setUser] = useState<any>(() => {
+    const sessionData = localStorage.getItem("session");
+    return sessionData ? JSON.parse(sessionData) : null;
+  });
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -18,7 +22,7 @@ const ReceiptsPage: React.FC = () => {
         const data: Request[] = await getSolicitacoes();
         // Filtra as solicitações concluídas
         const completedRequests = data.filter(
-          (req) => req.status.toLowerCase() === "completed"
+          (req) => req.status.toLowerCase() === "completed" && req.solicitanteId ===  user.id
         );
         setRequests(completedRequests);
       } catch (err) {
