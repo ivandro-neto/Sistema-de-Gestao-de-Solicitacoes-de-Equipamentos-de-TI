@@ -30,7 +30,7 @@ export const createSolicitacao = async (data: { solicitanteId: string; descricao
   
   await createNotificacao({
     usuarioId: response.data.atribuicoes.tecnicoId,
-    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `A solicitação ${response.data.id} foi atribuida a si.`
   });
   return response.data;
@@ -43,12 +43,12 @@ export const updateSolicitacao = async (id: string, data: { descricao?: string; 
   await updateSolicitacaoStatusWithHistory(id, updatedRequest.status);
   await createNotificacao({
     usuarioId: updatedRequest.solicitanteId,
-    destinatario: updatedRequest.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `Sua solicitação foi atualizada para o status "${updatedRequest.status}".`
   });
   await createNotificacao({
     usuarioId: updatedRequest.atribuicoes.tecnicoId,
-    destinatario: updatedRequest.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `A solicitação ${updatedRequest.id} foi atualizada para o status "${updatedRequest.status}".`
   });
   return updatedRequest;
@@ -59,12 +59,12 @@ export const updateSolicitacaoStatus = async (id: string, status: string) => {
   const response = await axios.patch(`${API_URL_REQUEST}/${id}/status`, { status });
   await createNotificacao({
     usuarioId: response.data.solicitanteId,
-    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `Sua solicitação foi atualizada para o status "${response.data.status}".`
   });
   await createNotificacao({
     usuarioId: response.data.atribuicoes.tecnicoId,
-    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    destinatario: '', // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `A solicitação ${response.data.id} foi atualizada para o status "${response.data.status}".`
   });
   return response.data;

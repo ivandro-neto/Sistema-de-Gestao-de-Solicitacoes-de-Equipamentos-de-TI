@@ -65,8 +65,8 @@
 .red{
   background-color: var(--error-color);
 }
-.red{
-  background-color: #f87777;
+.red:hover{
+  background-color: #d45d5d !important;
 }
 
 .message {
