@@ -4,8 +4,8 @@
   padding: 1rem;
   width: 25%;
   gap: 1rem;
-  border-right: 1px solid #273043;
-  background-color: #273043;
+  border-right: none;
+  background-color: var(--primary-color);
   color: white;
 }
 .navbar {
@@ -13,7 +13,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  background-color: #273043;
+  background-color: var(--primary-color);
   width: 100%;
   position: sticky;
 }

@@ -8,8 +8,12 @@ const HomePage: React.FC = () => {
     <div className={styles.pageContainer}>
       {/* Seção de Herói */}
       <section className={styles.heroSection}>
+
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>TechEquip Request</h1>
+          <h1 className={styles.heroTitle}>
+          <img className={styles.logo} src="../../public/icons/laptop-medical-solid.svg" alt="Logo" loading="lazy" />
+            TechEquip Request
+            </h1>
           <p className={styles.heroSubtitle}>
             Simplifique a montagem de equipamentos de TI na sua empresa
           </p>

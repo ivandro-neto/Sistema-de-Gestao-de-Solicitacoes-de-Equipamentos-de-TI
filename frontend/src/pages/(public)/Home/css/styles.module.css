@@ -18,6 +18,12 @@
   padding: 2rem;
 }
 
+.logo{
+  width: 64px;
+  filter: invert();
+  margin-right: 1rem;
+}
+
 /* Seção de Herói */
 .heroSection {
   display: flex;
