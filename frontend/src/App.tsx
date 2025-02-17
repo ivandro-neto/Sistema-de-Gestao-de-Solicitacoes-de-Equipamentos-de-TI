@@ -69,7 +69,6 @@ function App() {
 
         {/* public routes */}
         <Route element={<LoginPage/>} path='/login'/>
-        <Route element={<RegisterPage/>} path='/register'/>
         <Route element={<HomePage/>} path='/'/>
       </Routes>
     </BrowserRouter>

@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
             <button type="button"className={styles.ctaButton} onClick={() => navigate("/login")}>
               Login
             </button>
-            <button type="button"className={styles.outlineButton} onClick={() => navigate("/register")}>
+            <button type="button"className={styles.outlineButton} onClick={() => navigate("/login")}>
               Registrar
             </button>
           </div>
