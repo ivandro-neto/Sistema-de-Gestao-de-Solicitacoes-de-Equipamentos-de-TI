@@ -26,7 +26,7 @@ export const getSolicitacaoByUserId = async (id: string) => {
 // Envia uma notificação para um administrador (ou grupo de usuários) quando uma solicitação é criada
 export const createSolicitacao = async (data: { solicitanteId: string; descricao: string; equipamentoId: string; }) => {
   const response = await axios.post(`${API_URL_REQUEST}/`, data);
-  await sendNotificacoesPorTipo({ tipoUsuario: Roles.admin , mensagem: `Nova solicitação criada pelo usuário ${data.solicitanteId} e atribuida ao tecnico ${response.data.atribuicoes.tecnicoId}.`});
+  await sendNotificacoesPorTipo({ tipoUsuario: Roles.admin , mensagem: `Nova solicitação criada pelo usuário ${data.solicitanteId} e atribuida ao tecnico ${response.data?.atribuicoes?.tecnicoId ? response.data?.atribuicoes?.tecnicoId: ""}.`});
   
   await createNotificacao({
     usuarioId: response.data.atribuicoes.tecnicoId,
