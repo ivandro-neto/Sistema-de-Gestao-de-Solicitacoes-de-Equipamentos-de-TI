@@ -26,7 +26,13 @@ export const getSolicitacaoByUserId = async (id: string) => {
 // Envia uma notificação para um administrador (ou grupo de usuários) quando uma solicitação é criada
 export const createSolicitacao = async (data: { solicitanteId: string; descricao: string; equipamentoId: string; }) => {
   const response = await axios.post(`${API_URL_REQUEST}/`, data);
-  await sendNotificacoesPorTipo({ tipoUsuario: Roles["admin"] , mensagem: `Nova solicitação criada pelo usuário ${data.solicitanteId}.`});
+  await sendNotificacoesPorTipo({ tipoUsuario: Roles.admin , mensagem: `Nova solicitação criada pelo usuário ${data.solicitanteId} e atribuida ao tecnico ${response.data.atribuicoes.tecnicoId}.`});
+  
+  await createNotificacao({
+    usuarioId: response.data.atribuicoes.tecnicoId,
+    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    mensagem: `A solicitação ${response.data.id} foi atribuida a si.`
+  });
   return response.data;
 };
 
@@ -34,10 +40,16 @@ export const createSolicitacao = async (data: { solicitanteId: string; descricao
 export const updateSolicitacao = async (id: string, data: { descricao?: string; status?: string; }) => {
   const response = await axios.put(`${API_URL_REQUEST}/${id}`, data);
   const updatedRequest = response.data;
+  await updateSolicitacaoStatusWithHistory(id, updatedRequest.status);
   await createNotificacao({
     usuarioId: updatedRequest.solicitanteId,
     destinatario: updatedRequest.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
     mensagem: `Sua solicitação foi atualizada para o status "${updatedRequest.status}".`
+  });
+  await createNotificacao({
+    usuarioId: updatedRequest.atribuicoes.tecnicoId,
+    destinatario: updatedRequest.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    mensagem: `A solicitação ${updatedRequest.id} foi atualizada para o status "${updatedRequest.status}".`
   });
   return updatedRequest;
 };
@@ -45,6 +57,16 @@ export const updateSolicitacao = async (id: string, data: { descricao?: string; 
 // Atualiza somente o status da solicitação
 export const updateSolicitacaoStatus = async (id: string, status: string) => {
   const response = await axios.patch(`${API_URL_REQUEST}/${id}/status`, { status });
+  await createNotificacao({
+    usuarioId: response.data.solicitanteId,
+    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    mensagem: `Sua solicitação foi atualizada para o status "${response.data.status}".`
+  });
+  await createNotificacao({
+    usuarioId: response.data.atribuicoes.tecnicoId,
+    destinatario: response.data.usuario.email, // assume que o objeto atualizado inclui o campo 'usuario' com 'email'
+    mensagem: `A solicitação ${response.data.id} foi atualizada para o status "${response.data.status}".`
+  });
   return response.data;
 };
 
@@ -70,13 +92,25 @@ export const updateSolicitacaoStatusWithHistory = async (id: string, newStatus: 
 // "Exclui" uma solicitação (define o status como "cancelled")
 // Envia uma notificação ao solicitante informando que a solicitação foi cancelada
 export const deleteSolicitacao = async (id: string) => {
+  const currentRequestOldStatus = await getSolicitacaoById(id);
   const response = await axios.patch(`${API_URL_REQUEST}/${id}/status`, { status: "cancelled" });
   const currentRequest = await getSolicitacaoById(id);
-
+  await createHistorico({
+    solicitacaoId: id,
+    statusAnterior: currentRequestOldStatus.status,
+    statusNovo: currentRequest.status,
+  });
   await createNotificacao({
     usuarioId: currentRequest.solicitanteId,
     destinatario: "",
     mensagem: "Sua solicitação foi cancelada."
   });
+  
+  await createNotificacao({
+    usuarioId: currentRequest.atribuicoes.tecnicoId,
+    destinatario: "",
+    mensagem: `A solicitação ${currentRequest.id} foi cancelada.`
+  });
+
   return response.data;
 };

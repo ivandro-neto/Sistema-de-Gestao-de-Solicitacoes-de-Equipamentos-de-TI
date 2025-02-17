@@ -22,8 +22,7 @@ const RequestDetails: React.FC = () => {
         const reqData = await getSolicitacaoById(id!);
         const req = reqData
         req.usuario = reqData.usuario?.nome
-        req.techId= reqData.atribuicoes?.tecnicoId? reqData.atribuicoes?.tecnicoId : "" 
-        
+        req.techId= reqData.atribuicoes[0].tecnicoId ? reqData.atribuicoes[0].tecnicoId : ""
        
         setRequest(req);
         
@@ -81,7 +80,7 @@ const RequestDetails: React.FC = () => {
             <strong>Data:</strong> {new Date(request.createdAt).toLocaleDateString()}
           </p>
           <p><strong>Descrição:</strong> {request.descricao}</p>
-          <p><strong>Tecnico ID:</strong> {request.techId ? request.techId : "Aguardando atendimento..."}</p>
+          <p><strong>Tecnico ID:</strong> {request.techId !== ""? request.techId : "Aguardando atendimento..."}</p>
         </div>
      
         <div className={styles.history}>
