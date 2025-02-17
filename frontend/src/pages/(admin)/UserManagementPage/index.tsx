@@ -16,6 +16,7 @@ export default function UserManagement() {
   const [especialidade, setEspecialidade] = useState("");
   const [role, setRole] = useState("");
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   
 
   const fetchUsers = async () => {
@@ -40,19 +41,28 @@ export default function UserManagement() {
   }, []);
 
   const handleAddUser = () => {
-    if (!name || !email) return;
-    const newUser: User = {
-      nome : name,
-      email,
-      senha : "senha123#",
-      tipo : Roles[role],
-      departamento: RolesDepartment[Roles[role]]
-    };
-    register(newUser.nome, newUser.email,newUser.senha, newUser.departamento, role, especialidade)
-    setUsers([...users, newUser]);
-    setName("");
-    setEmail("");
-    setRole("user");
+    setLoading(true)
+   
+    try {
+    
+     if (!name || !email) return;
+     const newUser: User = {
+       nome : name,
+       email,
+       senha : "senha123#",
+       tipo : Roles[role],
+       departamento: RolesDepartment[Roles[role]]
+      };
+      register(newUser.nome, newUser.email,newUser.senha, newUser.departamento, role, especialidade)
+      setUsers([...users, newUser]);
+      setName("");
+      setEmail("");
+      setRole("user");
+    } catch (error) {
+     console.log(error)
+    }finally{
+      setLoading(false)
+    }
   };
 
   const handleDeleteUser = async (id: string) => {
@@ -83,7 +93,7 @@ const handleResetPassword = async (id: string, senha: string) =>{
         {role === "tech" &&
           <input type="text" placeholder="Especialidade" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} />
         }
-        <button type="button" onClick={handleAddUser}>Adicionar Usuário</button>
+        <button type="button" onClick={handleAddUser}>{loading ? "Processando..." : "Adicionar Usuário"}</button>
       </div>
       {/* Lista de Usuários */}
       <table className={styles.table}>

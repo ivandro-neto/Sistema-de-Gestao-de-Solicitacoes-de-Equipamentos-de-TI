@@ -2,7 +2,6 @@ import { Expanded } from "../Account";
 import styles from "./css/styles.module.css";
 import { logout } from "../../api/user";
 import { useNavigate } from "react-router-dom";
-import type { User } from "../../utils/Model";
 
  interface UserCard {
   id?: string;

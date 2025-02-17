@@ -10,12 +10,14 @@ const RegisterPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setLoading(true);
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
@@ -33,6 +35,8 @@ const RegisterPage: React.FC = () => {
     } catch (err: any) {
       console.error(err);
       setError(err.response?.data?.message || "Registration failed.");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -90,7 +94,7 @@ const RegisterPage: React.FC = () => {
           </div>
           
           <button type="submit" className={styles.button}>
-            Registrar
+            {loading ? "Processando..." : "Registrar"}
           </button>
         </form>
         <p className={styles.loginLink}>

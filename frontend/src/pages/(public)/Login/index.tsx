@@ -8,11 +8,14 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
+
     try {
       await login(email, password);
       const sessionData = localStorage.getItem("session");
@@ -32,6 +35,8 @@ const LoginPage: React.FC = () => {
       }
     } catch (err) {
       setError("Login failed. Check your credentials.");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -58,7 +63,7 @@ const LoginPage: React.FC = () => {
             required
           />
           <button type="submit" className={styles.button}>
-            Entrar
+            {loading? "processando...": "Entrar"}
           </button>
         </form>
         <p className={styles.registerText}>

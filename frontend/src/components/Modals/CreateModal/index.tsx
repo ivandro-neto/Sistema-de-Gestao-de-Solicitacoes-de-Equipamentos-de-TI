@@ -20,6 +20,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
   const [equipamentoId, setEquipamentoId] = useState<string>("");
   const [equipamentos, setEquipamentos] = useState<Equipment[]>([]);
   const [loadingEquip, setLoadingEquip] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorEquip, setErrorEquip] = useState<string>("");
 
   useEffect(() => {
@@ -36,6 +37,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
         setErrorEquip("Erro ao buscar equipamentos.");
       } finally {
         setLoadingEquip(false);
+        setLoading(true)
+
       }
     };
     fetchEquipamentos();
@@ -43,7 +46,14 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onCreate({ descricao, equipamentoId });
+    setLoading(true)
+    try{
+      onCreate({ descricao, equipamentoId });
+    }catch(err){
+      console.log(err)
+    }finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -75,7 +85,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, onCreate }) => {
               ))}
             </select>
             <div className={styles.modalActions}>
-              <button type="submit">Criar</button>
+              <button type="submit">{loading ? "Processando..." : "Criar"}</button>
               <button type="button" onClick={onClose}>
                 Cancelar
               </button>
